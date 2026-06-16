@@ -4,82 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JR Electronic Limited | Official Product Catalog</title>
+    <meta name="description" content="JR Electronic Limited - Wholesale supplier of electric herb grinders, smoking filters, soldering iron tools, and custom packaging. Tiered wholesale pricing and logo customization available.">
+    <meta property="og:title" content="JR Electronic Limited | Official Product Catalog">
+    <meta property="og:description" content="Wholesale electric herb grinders, smoking filters, soldering iron tools, and custom packaging with tiered pricing.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/a1.1.png">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%9A%A1</text></svg>">
     <style>
+        /* --- Theme palette (edit colors here once, applies everywhere) --- */
+        :root {
+            --bg: #ffffff;
+            --bg-soft: #f6f8fb;        /* soft surfaces: tables, inputs zones */
+            --bg-soft2: #eef2f7;        /* image placeholders, secondary */
+            --text: #1a2233;            /* primary text */
+            --text-muted: #5b6573;      /* secondary text */
+            --text-faint: #95a0b0;      /* hints, captions */
+            --accent: #2563eb;          /* brand blue */
+            --accent-dark: #1d4ed8;     /* blue hover */
+            --accent-soft: rgba(37, 99, 235, 0.08);
+            --accent-soft2: rgba(37, 99, 235, 0.14);
+            --border: #e6e9ef;          /* light hairline */
+            --border-strong: #d3dae4;   /* input borders */
+            --shadow: 0 1px 3px rgba(16, 24, 40, 0.06), 0 1px 2px rgba(16, 24, 40, 0.04);
+            --shadow-hover: 0 12px 28px rgba(16, 24, 40, 0.12);
+            --danger: #ef4444;
+        }
+
         /* --- Base Typography --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; }
-        body { background-color: #08080a; color: #f3f4f6; padding-top: 100px; }
-        
+        body { background-color: var(--bg); color: var(--text); padding-top: 100px; }
+
         /* --- Top Navigation --- */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: rgba(8, 8, 10, 0.85); backdrop-filter: blur(15px); position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .logo { font-size: 20px; font-weight: 800; color: #00df89; letter-spacing: 1.5px; cursor: pointer; }
-        nav a { color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 600; padding: 8px 16px; border: 1px solid #00df89; border-radius: 6px; background-color: rgba(0, 223, 137, 0.05); transition: all 0.3s; }
-        nav a:hover { background-color: #00df89; color: #08080a; box-shadow: 0 0 15px rgba(0, 223, 137, 0.3); }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); box-shadow: 0 1px 12px rgba(16, 24, 40, 0.04); }
+        .logo { font-size: 20px; font-weight: 800; color: var(--accent); letter-spacing: 1.5px; cursor: pointer; }
+        nav a { color: var(--accent); text-decoration: none; font-size: 15px; font-weight: 600; padding: 8px 16px; border: 1px solid var(--border-strong); border-radius: 6px; background-color: var(--bg); transition: all 0.3s; white-space: nowrap; }
+        nav a:hover { background-color: var(--accent); color: #ffffff; border-color: var(--accent); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); }
+
+        /* --- Contact Dropdown --- */
+        .contact-dropdown { position: relative; display: inline-block; }
+        .contact-btn { cursor: pointer; }
+        .dropdown-content { display: none; position: absolute; right: 0; background-color: #ffffff; min-width: 180px; border-radius: 8px; border: 1px solid var(--border); box-shadow: var(--shadow-hover); overflow: hidden; z-index: 1001; }
+        .dropdown-content a { display: block; padding: 14px 18px; font-size: 14px; color: var(--text); border: none; border-radius: 0; border-bottom: 1px solid var(--border); background-color: transparent; }
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background-color: var(--accent); color: #ffffff; }
+        .contact-dropdown:hover .dropdown-content { display: block; }
+        .contact-dropdown:active .dropdown-content,
+        .contact-dropdown:focus-within .dropdown-content { display: block; }
 
         /* --- Main List View --- */
-        .products-container { max-width: 1400px; margin: 0 auto; padding: 20px 50px 40px 50px; transition: opacity 0.3s; }
-        .page-header { margin-bottom: 30px; border-left: 4px solid #00df89; padding-left: 15px; display: flex; justify-content: space-between; align-items: flex-end; }
-        .page-header h1 { font-size: 28px; font-weight: 700; letter-spacing: 1px; }
-        .page-header p { color: #6b7280; font-size: 14px; margin-top: 5px; }
-        .product-count { background-color: #121216; padding: 8px 15px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); font-size: 14px; color: #9ca3af; }
-        .product-count strong { color: #00df89; }
-        
-        .category-filters { display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
-        .filter-btn { padding: 10px 20px; background-color: transparent; border: 1px solid rgba(255, 255, 255, 0.15); color: #9ca3af; border-radius: 30px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.3s ease; }
-        .filter-btn:hover { border-color: #00df89; color: #ffffff; }
-        .filter-btn.active { background-color: #00df89; color: #08080a; border-color: #00df89; font-weight: 700; box-shadow: 0 0 15px rgba(0, 223, 137, 0.3); }
+        .products-container { max-width: 1650px; margin: 0 auto; padding: 20px 30px 40px 30px; transition: opacity 0.3s; }
+        .page-header { margin-bottom: 30px; border-left: 4px solid var(--accent); padding-left: 15px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .page-header h1 { font-size: 28px; font-weight: 700; letter-spacing: 0.5px; color: var(--text); }
+        .page-header p { color: var(--text-muted); font-size: 14px; margin-top: 5px; }
+        .product-count { background-color: var(--bg-soft); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--border); font-size: 14px; color: var(--text-muted); }
+        .product-count strong { color: var(--accent); }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
-        .product-card { background-color: #121216; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.03); transition: all 0.3s ease; cursor: pointer; }
-        .product-card:hover { transform: translateY(-5px); border-color: rgba(0, 223, 137, 0.4); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); }
-        .product-img { height: 260px; background-color: #1c1c24; background-size: cover; background-position: center; transition: transform 0.5s; }
+        /* --- Scrollable Category Filters --- */
+        .category-filters { display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .category-filters::-webkit-scrollbar { display: none; }
+        .filter-btn { padding: 10px 20px; background-color: var(--bg); border: 1px solid var(--border-strong); color: var(--text-muted); border-radius: 30px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.3s ease; white-space: nowrap; flex-shrink: 0; }
+        .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .filter-btn.active { background-color: var(--accent); color: #ffffff; border-color: var(--accent); font-weight: 700; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); }
+
+        .search-input { width: 100%; max-width: 320px; padding: 10px 16px; margin-bottom: 20px; background-color: var(--bg); border: 1px solid var(--border-strong); border-radius: 30px; color: var(--text); font-size: 14px; outline: none; transition: border-color 0.3s; }
+        .search-input::placeholder { color: var(--text-faint); }
+        .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+        nav a:focus-visible, .filter-btn:focus-visible, .action-btn:focus-visible, .back-btn:focus-visible, .contact-btn:focus-visible, .dropdown-content a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+        /* --- Product Grid --- */
+        /* 【修改】依然保持 repeat(4, 1fr) 四個一排，但把間距 gap 從 30px 縮小到 16px，讓每個卡片分到更多寬度 */
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .product-card { background-color: var(--bg); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); transition: all 0.3s ease; cursor: pointer; }
+        .product-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: var(--shadow-hover); }
+        .product-card:active { transform: scale(0.98); }
+        .product-img { height: 280px; background-color: var(--bg-soft2); background-size: cover; background-position: center; transition: transform 0.5s; }
         .product-card:hover .product-img { transform: scale(1.03); }
         .product-info { padding: 20px; }
-        .product-info h3 { font-size: 18px; margin-bottom: 8px; font-weight: 600; color: #ffffff; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 44px; }
-        .product-desc { color: #9ca3af; font-size: 13px; line-height: 1.5; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 38px; }
-        .specs { display: flex; justify-content: flex-start; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 12px; font-size: 12px; color: #6b7280; }
-        .no-products { grid-column: 1 / -1; text-align: center; padding: 50px; color: #6b7280; font-size: 18px; }
+        .product-info h3 { font-size: 18px; margin-bottom: 8px; font-weight: 600; color: var(--text); display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 48px; }
+        .product-desc { color: var(--text-muted); font-size: 14px; line-height: 1.5; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 42px; }
+        .specs { display: flex; justify-content: flex-start; border-top: 1px solid var(--border); padding-top: 12px; font-size: 13px; color: var(--text-faint); }
+        .no-products { grid-column: 1 / -1; text-align: center; padding: 50px; color: var(--text-muted); font-size: 18px; }
 
         /* --- Detail View --- */
         #detail-view { display: none; max-width: 1200px; margin: 0 auto; padding: 20px 50px 80px 50px; animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        .back-btn { display: inline-flex; align-items: center; color: #9ca3af; font-size: 15px; cursor: pointer; margin-bottom: 30px; background: none; border: none; transition: color 0.3s; }
-        .back-btn:hover { color: #00df89; }
+        .back-btn { display: inline-flex; align-items: center; color: var(--text-muted); font-size: 15px; cursor: pointer; margin-bottom: 30px; background: none; border: none; transition: color 0.3s; }
+        .back-btn:hover { color: var(--accent); }
         .back-btn::before { content: "←"; margin-right: 8px; font-size: 18px; }
 
-        .detail-layout { display: flex; gap: 50px; background-color: #121216; border-radius: 16px; padding: 40px; border: 1px solid rgba(255,255,255,0.05); }
+        .detail-layout { display: flex; gap: 50px; background-color: var(--bg); border-radius: 16px; padding: 40px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+        .detail-left { flex: 1; min-width: 0; }
+        .detail-img { width: 100%; border-radius: 12px; background-color: var(--bg-soft2); aspect-ratio: 1/1; object-fit: cover; margin-bottom: 20px; }
+        .detail-right { flex: 1.2; display: flex; flex-direction: column; min-width: 0; }
+        .detail-category { color: var(--accent); font-size: 14px; font-weight: 600; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px; }
+        .detail-title { font-size: 32px; color: var(--text); margin-bottom: 20px; line-height: 1.3; }
 
-        .detail-left { flex: 1; }
-        .detail-img { width: 100%; border-radius: 12px; background-color: #1c1c24; aspect-ratio: 1/1; object-fit: cover; margin-bottom: 20px; }
-
-        .detail-right { flex: 1.2; display: flex; flex-direction: column; }
-        .detail-category { color: #00df89; font-size: 14px; font-weight: 600; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px; }
-        .detail-title { font-size: 32px; color: #ffffff; margin-bottom: 20px; line-height: 1.3; }
-        
         /* Tiered Pricing Table */
-        .price-table-container { background-color: #1c1c24; border-radius: 10px; padding: 20px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.05); }
-        .price-table-title { font-size: 15px; font-weight: 600; color: #ffffff; margin-bottom: 12px; display: flex; align-items: center; }
+        .price-table-container { background-color: var(--bg-soft); border-radius: 10px; padding: 20px; margin-bottom: 25px; border: 1px solid var(--border); }
+        .price-table-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; }
         .price-table-title::before { content: "💰"; margin-right: 8px; }
         table { width: 100%; border-collapse: collapse; text-align: left; }
-        th, td { padding: 10px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
-        th { color: #6b7280; font-weight: 500; }
-        td.qty { color: #e5e7eb; font-weight: 500; }
-        td.price { color: #00df89; font-weight: 700; }
+        th, td { padding: 10px 15px; border-bottom: 1px solid var(--border); font-size: 14px; }
+        th { color: var(--text-muted); font-weight: 500; }
+        td.qty { color: var(--text); font-weight: 500; }
+        td.price { color: var(--accent); font-weight: 700; }
         tr:last-child td { border-bottom: none; }
 
+        /* Bottom Two-Column Layout */
+        .bottom-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+
         /* Key Attributes Section */
-        .attributes-container { background-color: #1c1c24; border-radius: 10px; padding: 20px; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.05); }
-        .attributes-title { font-size: 15px; font-weight: 600; color: #ffffff; margin-bottom: 15px; display: flex; align-items: center; }
+        .attributes-container { background-color: var(--bg-soft); border-radius: 10px; padding: 20px; border: 1px solid var(--border); }
+        .attributes-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 15px; display: flex; align-items: center; }
         .attributes-title::before { content: "📋"; margin-right: 8px; }
-        .attributes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .attribute-item { display: flex; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 8px; font-size: 13.5px; }
-        .attribute-label { width: 40%; color: #6b7280; font-weight: 500; padding-right: 10px; }
-        .attribute-value { width: 60%; color: #e5e7eb; }
+        .attributes-grid { display: flex; flex-direction: column; gap: 8px; }
+        .attribute-item { display: flex; flex-direction: column; border-bottom: 1px solid var(--border); padding-bottom: 8px; font-size: 13.5px; gap: 3px; }
+        .attribute-label { color: var(--text-muted); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .attribute-value { color: var(--text); font-size: 14px; }
+
+        /* Customization Options Section */
+        .customization-container { background-color: var(--bg-soft); border-radius: 10px; padding: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; }
+        .customization-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .customization-title::before { content: "🎨"; margin-right: 4px; }
+        .customization-options { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+        .customization-option { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text); padding: 8px 12px; background-color: var(--accent-soft); border-radius: 6px; border: 1px solid var(--border); }
+        .customization-check { color: var(--accent); font-size: 16px; font-weight: 700; flex-shrink: 0; }
 
         /* Buttons */
-        .action-btn { background-color: #00df89; color: #08080a; border: none; padding: 16px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; width: 100%; text-align: center; display: flex; justify-content: center; align-items: center; gap: 10px; }
-        .action-btn:hover { background-color: #00b36d; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 223, 137, 0.3); }
-        
+        .action-btn { background-color: var(--accent); color: #ffffff; border: none; padding: 16px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; width: 100%; text-align: center; display: flex; justify-content: center; align-items: center; gap: 10px; -webkit-tap-highlight-color: transparent; }
+        .action-btn:hover { background-color: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3); }
+        .action-btn:active { transform: scale(0.97); }
+
         .action-btn.stripe-mode { background-color: #635BFF; color: #ffffff; }
         .action-btn.stripe-mode:hover { background-color: #4a43d4; box-shadow: 0 5px 15px rgba(99, 91, 255, 0.4); }
 
@@ -87,16 +144,225 @@
         .action-btn.whatsapp-mode:hover { background-color: #1ebe5d; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4); }
 
         /* Detail Images Section */
-        .detail-images-container { margin-top: 40px; width: 100%; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; }
-        .detail-images-title { font-size: 20px; color: #ffffff; margin-bottom: 20px; text-align: center; letter-spacing: 2px; }
+        .detail-images-container { margin-top: 40px; width: 100%; border-top: 1px solid var(--border); padding-top: 40px; }
+        .detail-images-title { font-size: 20px; color: var(--text); margin-bottom: 20px; text-align: center; letter-spacing: 2px; }
         .detail-images-wrapper { display: flex; flex-direction: column; width: 100%; gap: 0; }
-        .detail-images-wrapper img { width: 100%; height: auto; display: block; }
+        .detail-images-wrapper img { width: 70%; height: auto; display: block; margin: 0 auto; }
+        footer { text-align: center; padding: 40px; color: var(--text-faint); font-size: 13px; margin-top: 60px; border-top: 1px solid var(--border); }
 
-        footer { text-align: center; padding: 40px; color: #4b5563; font-size: 13px; margin-top: 60px; border-top: 1px solid rgba(255, 255, 255, 0.03); }
+        /* ========== MOBILE ENHANCEMENTS ========== */
+        @media (max-width: 768px) {
+            body { padding-top: 70px; }
+            header { padding: 15px 20px; }
+            .logo { font-size: 16px; }
+            nav a { font-size: 14px; padding: 8px 14px; }
+            .products-container { padding: 15px 15px 30px 15px; }
+            .page-header { flex-direction: column; gap: 10px; }
+            .page-header h1 { font-size: 20px; }
+            .page-header p { font-size: 12px; }
+            .product-count { font-size: 12px; align-self: flex-start; }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .product-img { height: 180px; }
+            .product-info { padding: 12px; }
+            .product-info h3 { font-size: 15px; height: 40px; }
+            .product-desc { font-size: 13px; height: 36px; }
+            .specs { font-size: 12px; }
+            .detail-layout { flex-direction: column; padding: 20px; gap: 20px; }
+            .detail-title { font-size: 22px; }
+            .detail-category { font-size: 12px; }
+            .bottom-two-col { grid-template-columns: 1fr; gap: 15px; }
+            .attribute-item { flex-direction: row; justify-content: space-between; align-items: center; }
+            .attribute-label { font-size: 11px; }
+            .attribute-value { font-size: 13px; text-align: right; }
+            th, td { padding: 8px 10px; font-size: 12px; }
+            .action-btn { padding: 14px; font-size: 15px; }
+            .dropdown-content { min-width: 160px; }
+            .dropdown-content a { padding: 12px 16px; font-size: 14px; }
+            .customization-option { font-size: 12px; padding: 6px 10px; }
+        }
 
-        @media (max-width: 900px) { 
-            .detail-layout { flex-direction: column; padding: 20px; } 
-            .attributes-grid { grid-template-columns: 1fr; }
+        @media (max-width: 400px) {
+            .grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .product-img { height: 160px; }
+            .product-info h3 { font-size: 14px; height: 36px; }
+            .logo { font-size: 15px; letter-spacing: 1px; }
+            .filter-btn { padding: 8px 14px; font-size: 12px; }
+        }
+
+        /* ========== INQUIRY CART (RFQ) ========== */
+        /* "Add to Inquiry" button on each product card */
+        .card-cart-btn { width: 100%; margin-top: 12px; padding: 10px; background-color: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent); border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.25s; -webkit-tap-highlight-color: transparent; }
+        .card-cart-btn:hover { background-color: var(--accent); color: #ffffff; }
+        .card-cart-btn:active { transform: scale(0.97); }
+
+        /* Floating cart button */
+        .cart-fab { position: fixed; bottom: 28px; right: 28px; z-index: 1500; background-color: var(--accent); color: #ffffff; border: none; width: 60px; height: 60px; border-radius: 50%; font-size: 24px; cursor: pointer; box-shadow: 0 8px 24px rgba(37, 99, 235, 0.35); transition: transform 0.25s; display: flex; align-items: center; justify-content: center; }
+        .cart-fab:hover { transform: scale(1.08); }
+        .cart-fab:active { transform: scale(0.95); }
+        .cart-fab .cart-badge { position: absolute; top: -4px; right: -4px; background-color: var(--danger); color: #fff; font-size: 12px; font-weight: 700; min-width: 22px; height: 22px; border-radius: 11px; display: flex; align-items: center; justify-content: center; padding: 0 6px; border: 2px solid var(--bg); }
+        .cart-fab .cart-badge.hidden { display: none; }
+
+        /* Slide-in drawer (shared by cart + inquiry form) */
+        .overlay-backdrop { display: none; position: fixed; inset: 0; background-color: rgba(16, 24, 40, 0.45); backdrop-filter: blur(3px); z-index: 1600; }
+        .overlay-backdrop.open { display: block; }
+        .drawer { position: fixed; top: 0; right: 0; height: 100%; width: 420px; max-width: 90vw; background-color: var(--bg); border-left: 1px solid var(--border); box-shadow: -8px 0 30px rgba(16, 24, 40, 0.12); z-index: 1700; transform: translateX(100%); transition: transform 0.3s ease; display: flex; flex-direction: column; }
+        .drawer.open { transform: translateX(0); }
+        .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 22px 24px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+        .drawer-header h2 { font-size: 19px; color: var(--text); font-weight: 700; }
+        .drawer-close { background: none; border: none; color: var(--text-muted); font-size: 26px; cursor: pointer; line-height: 1; transition: color 0.2s; }
+        .drawer-close:hover { color: var(--accent); }
+        .drawer-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+        .drawer-footer { padding: 20px 24px; border-top: 1px solid var(--border); flex-shrink: 0; background-color: var(--bg); }
+
+        /* Cart line items */
+        .cart-item { display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+        .cart-item-img { width: 64px; height: 64px; border-radius: 8px; background-color: var(--bg-soft2); background-size: cover; background-position: center; flex-shrink: 0; }
+        .cart-item-info { flex: 1; min-width: 0; }
+        .cart-item-name { font-size: 13.5px; color: var(--text); font-weight: 600; margin-bottom: 6px; line-height: 1.35; }
+        .cart-item-remove { background: none; border: none; color: var(--text-faint); font-size: 12px; cursor: pointer; padding: 0; text-decoration: underline; transition: color 0.2s; }
+        .cart-item-remove:hover { color: var(--danger); }
+        .cart-empty { text-align: center; color: var(--text-muted); font-size: 15px; padding: 50px 20px; }
+
+        /* Quantity stepper */
+        .qty-stepper { display: inline-flex; align-items: center; border: 1px solid var(--border-strong); border-radius: 8px; overflow: hidden; }
+        .qty-stepper button { background-color: var(--bg-soft); color: var(--accent); border: none; width: 32px; height: 32px; font-size: 18px; cursor: pointer; transition: background-color 0.2s; }
+        .qty-stepper button:hover { background-color: var(--bg-soft2); }
+        .qty-stepper input { width: 52px; height: 32px; text-align: center; background-color: var(--bg); border: none; border-left: 1px solid var(--border); border-right: 1px solid var(--border); color: var(--text); font-size: 14px; outline: none; -moz-appearance: textfield; appearance: textfield; }
+        .qty-stepper input::-webkit-outer-spin-button, .qty-stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+        /* Detail page quantity row */
+        .detail-qty-row { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+        .detail-qty-row label { font-size: 14px; color: var(--text-muted); font-weight: 600; }
+        .detail-btn-row { display: flex; flex-direction: column; gap: 12px; }
+        .action-btn.cart-mode { background-color: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent); }
+        .action-btn.cart-mode:hover { background-color: var(--accent-soft2); box-shadow: none; }
+
+        /* Detail image gallery thumbnails */
+        .gallery-thumbs { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+        .gallery-thumb { width: 70px; height: 70px; border-radius: 8px; background-color: var(--bg-soft2); background-size: cover; background-position: center; cursor: pointer; border: 2px solid var(--border); transition: border-color 0.2s; }
+        .gallery-thumb:hover { border-color: var(--accent); }
+        .gallery-thumb.active { border-color: var(--accent); }
+
+        /* Inquiry form */
+        .inq-field { margin-bottom: 16px; }
+        .inq-field label { display: block; font-size: 13px; color: var(--text-muted); font-weight: 600; margin-bottom: 6px; }
+        .inq-field label .req { color: var(--danger); }
+        .inq-field input, .inq-field textarea, .inq-field select { width: 100%; padding: 11px 14px; background-color: var(--bg); border: 1px solid var(--border-strong); border-radius: 8px; color: var(--text); font-size: 14px; outline: none; transition: border-color 0.2s; }
+        .inq-field input:focus, .inq-field textarea:focus, .inq-field select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+        .inq-field textarea { resize: vertical; min-height: 90px; }
+        .inq-hint { font-size: 12px; color: var(--text-faint); margin-top: 14px; line-height: 1.5; }
+
+        /* Toast notification */
+        .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px); background-color: var(--text); color: #ffffff; padding: 14px 26px; border-radius: 30px; font-size: 14px; font-weight: 700; z-index: 2000; opacity: 0; transition: all 0.3s ease; box-shadow: 0 8px 24px rgba(16, 24, 40, 0.25); pointer-events: none; }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        @media (max-width: 768px) {
+            .cart-fab { bottom: 20px; right: 20px; width: 54px; height: 54px; font-size: 22px; }
+            .drawer { width: 100%; max-width: 100vw; }
+        }
+
+        /* ========================================================= */
+        /* ============  TRUST / CREDIBILITY SECTIONS  ============= */
+        /* ========================================================= */
+
+        /* --- Hero banner --- */
+        .hero { position: relative; border-radius: 18px; overflow: hidden; padding: 60px 50px; margin-bottom: 22px; background:
+            radial-gradient(circle at 85% 20%, rgba(37, 99, 235, 0.10), transparent 45%),
+            radial-gradient(circle at 10% 90%, rgba(37, 99, 235, 0.06), transparent 40%),
+            linear-gradient(135deg, #f7f9fc 0%, #eef3fb 100%);
+            border: 1px solid var(--border); }
+        .hero-badge { display: inline-flex; align-items: center; gap: 7px; background: var(--accent-soft); border: 1px solid rgba(37, 99, 235, 0.25); color: var(--accent); font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 30px; margin-bottom: 20px; }
+        .hero h1 { font-size: 42px; line-height: 1.15; font-weight: 800; color: var(--text); max-width: 760px; margin-bottom: 18px; letter-spacing: -0.5px; }
+        .hero h1 span { color: var(--accent); }
+        .hero p { font-size: 17px; color: var(--text-muted); max-width: 620px; line-height: 1.6; margin-bottom: 30px; }
+        .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+        .hero-btn { padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; border: none; transition: all 0.25s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .hero-btn.primary { background: var(--accent); color: #ffffff; }
+        .hero-btn.primary:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3); }
+        .hero-btn.secondary { background: #ffffff; color: var(--text); border: 1px solid var(--border-strong); }
+        .hero-btn.secondary:hover { background: var(--bg-soft); border-color: var(--accent); transform: translateY(-2px); }
+
+        /* --- Trust stats bar --- */
+        .trust-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 45px; }
+        .trust-stat { background: var(--bg); border: 1px solid var(--border); box-shadow: var(--shadow); border-radius: 12px; padding: 24px 20px; text-align: center; }
+        .trust-stat .num { font-size: 30px; font-weight: 800; color: var(--accent); margin-bottom: 4px; }
+        .trust-stat .label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+
+        /* --- Generic section heading --- */
+        .section-block { margin: 60px 0 0; }
+        .section-head { text-align: center; margin-bottom: 36px; }
+        .section-head h2 { font-size: 28px; font-weight: 700; color: var(--text); margin-bottom: 10px; letter-spacing: 0.5px; }
+        .section-head h2::after { content: ""; display: block; width: 60px; height: 3px; background: var(--accent); margin: 14px auto 0; border-radius: 2px; }
+        .section-head p { color: var(--text-muted); font-size: 15px; max-width: 600px; margin: 0 auto; }
+
+        /* --- Why choose us cards --- */
+        .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .feature-card { background: var(--bg); border: 1px solid var(--border); box-shadow: var(--shadow); border-radius: 14px; padding: 30px 26px; transition: all 0.3s; }
+        .feature-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+        .feature-icon { font-size: 32px; margin-bottom: 16px; display: inline-block; }
+        .feature-card h3 { font-size: 17px; color: var(--text); font-weight: 700; margin-bottom: 10px; }
+        .feature-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+        /* --- How to order steps --- */
+        .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+        .step-card { position: relative; background: var(--bg); border: 1px solid var(--border); box-shadow: var(--shadow); border-radius: 14px; padding: 28px 22px; text-align: center; }
+        .step-num { width: 44px; height: 44px; border-radius: 50%; background: var(--accent-soft); border: 2px solid var(--accent); color: var(--accent); font-size: 18px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+        .step-card h3 { font-size: 16px; color: var(--text); font-weight: 700; margin-bottom: 8px; }
+        .step-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.55; }
+
+        /* --- About company --- */
+        .about-block { background: var(--bg); border: 1px solid var(--border); box-shadow: var(--shadow); border-radius: 16px; padding: 44px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: center; }
+        .about-block h2 { font-size: 26px; color: var(--text); font-weight: 700; margin-bottom: 18px; }
+        .about-block h2 span { color: var(--accent); }
+        .about-block p { font-size: 15px; color: var(--text-muted); line-height: 1.75; margin-bottom: 14px; }
+        .about-points { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+        .about-points li { display: flex; gap: 12px; align-items: flex-start; font-size: 14.5px; color: var(--text); line-height: 1.5; }
+        .about-points li::before { content: "✓"; color: var(--accent); font-weight: 800; font-size: 16px; flex-shrink: 0; }
+
+        /* --- Payment & shipping --- */
+        .payship-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .payship-card { background: var(--bg); border: 1px solid var(--border); box-shadow: var(--shadow); border-radius: 14px; padding: 28px; }
+        .payship-card h3 { font-size: 16px; color: var(--text); font-weight: 700; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+        .badge-row { display: flex; flex-wrap: wrap; gap: 10px; }
+        .pay-badge { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: 600; color: var(--text); display: inline-flex; align-items: center; gap: 7px; }
+
+        /* --- FAQ accordion --- */
+        .faq-list { max-width: 820px; margin: 0 auto; }
+        .faq-item { background: var(--bg); border: 1px solid var(--border); box-shadow: var(--shadow); border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+        .faq-q { width: 100%; text-align: left; background: none; border: none; color: var(--text); font-size: 15.5px; font-weight: 600; padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; transition: color 0.2s; }
+        .faq-q:hover { color: var(--accent); }
+        .faq-q .chev { color: var(--accent); font-size: 20px; transition: transform 0.3s; flex-shrink: 0; }
+        .faq-item.open .faq-q .chev { transform: rotate(45deg); }
+        .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; padding: 0 24px; color: var(--text-muted); font-size: 14.5px; line-height: 1.7; }
+        .faq-item.open .faq-a { max-height: 400px; padding: 0 24px 22px; }
+
+        /* --- Upgraded footer --- */
+        .site-footer { background: var(--bg-soft); border-top: 1px solid var(--border); margin-top: 70px; padding: 50px 50px 0; color: var(--text-muted); }
+        .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 40px; padding-bottom: 36px; }
+        .footer-col h4 { color: var(--text); font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+        .footer-col .brand { font-size: 19px; font-weight: 800; color: var(--accent); letter-spacing: 1px; margin-bottom: 14px; }
+        .footer-col p, .footer-col a { font-size: 13.5px; color: var(--text-muted); line-height: 1.9; text-decoration: none; display: block; transition: color 0.2s; }
+        .footer-col a:hover { color: var(--accent); }
+        .footer-bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid var(--border); padding: 22px 0; text-align: center; font-size: 13px; color: var(--text-faint); }
+
+        @media (max-width: 900px) {
+            .feature-grid { grid-template-columns: 1fr 1fr; }
+            .steps-grid { grid-template-columns: 1fr 1fr; }
+            .about-block { grid-template-columns: 1fr; gap: 26px; padding: 30px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+        }
+        @media (max-width: 768px) {
+            .hero { padding: 40px 26px; }
+            .hero h1 { font-size: 30px; }
+            .hero p { font-size: 15px; }
+            .trust-bar { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .trust-stat .num { font-size: 24px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .steps-grid { grid-template-columns: 1fr; }
+            .payship-grid { grid-template-columns: 1fr; }
+            .section-head h2 { font-size: 23px; }
+            .site-footer { padding: 40px 24px 0; }
+            .footer-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -104,44 +370,225 @@
 
     <header>
         <div class="logo" onclick="goBackToList()">JR Electronic Limited</div>
-        <!-- ✅ WhatsApp link - Replace YOUR_PHONE_NUMBER with your actual number -->
-        <nav><a href="https://wa.me/85263658523" target="_blank">Contact Us</a></nav>
+        <nav style="display:flex; gap:12px; align-items:center;">
+            <a href="#" onclick="openInquiry(); return false;">Send Inquiry</a>
+            <div class="contact-dropdown">
+                <a href="#" class="contact-btn">Contact Us ▾</a>
+                <div class="dropdown-content">
+                    <a href="https://wa.me/85263658523" target="_blank">📱 WhatsApp</a>
+                    <a href="mailto:jrelectronicltd@gmail.com">📧 Email</a>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <main id="list-view" class="products-container">
-        <div class="page-header">
+
+        <section class="hero">
+            <span class="hero-badge">⚡ Verified Cross-border Wholesale Supplier</span>
+            <h1>Factory-Direct Wholesale, <span>Without the Middleman Markup</span></h1>
+            <p>JR Electronic Limited supplies electric herb grinders, smoking filters, soldering tools and custom packaging — with tiered wholesale pricing, OEM/ODM customization, and worldwide shipping.</p>
+            <div class="hero-cta">
+                <a class="hero-btn primary" href="#" onclick="scrollToSection('catalog'); return false;">🛍️ Browse Products</a>
+                <a class="hero-btn secondary" href="#" onclick="openInquiry(); return false;">📝 Request a Quote</a>
+            </div>
+        </section>
+
+        <div class="trust-bar">
+            <div class="trust-stat"><div class="num">10+</div><div class="label">Years in Manufacturing</div></div>
+            <div class="trust-stat"><div class="num">60+</div><div class="label">Countries Served</div></div>
+            <div class="trust-stat"><div class="num">OEM/ODM</div><div class="label">Custom Logo &amp; Packaging</div></div>
+            <div class="trust-stat"><div class="num">&lt; 12h</div><div class="label">Average Reply Time</div></div>
+        </div>
+
+        <div class="page-header" id="catalog">
             <div>
                 <h1>Product Catalog (Wholesale)</h1>
                 <p>Click on any product to view detailed specifications, key attributes, and tiered wholesale pricing</p>
             </div>
             <div class="product-count">Currently Showing: <strong id="count-num">0</strong> items</div>
         </div>
-        
+
+        <input type="text" id="searchInput" class="search-input" placeholder="Search products..." oninput="handleSearch(this.value)">
+
         <div class="category-filters" id="filters">
-            <button class="filter-btn active" onclick="filterProducts('all', this)">All Products</button>
-            <button class="filter-btn" onclick="filterProducts('grinder', this)">Electric Herb Grinder</button>
-            <button class="filter-btn" onclick="filterProducts('filter', this)">Smoking Filter</button>
-            <button class="filter-btn" onclick="filterProducts('iron', this)">Soldering Iron Tool</button>
-            <button class="filter-btn" onclick="filterProducts('paperbox', this)">Paper Box</button>
-            <button class="filter-btn" onclick="filterProducts('plasticbag', this)">Plastic Bag</button>
-            <button class="filter-btn" onclick="filterProducts('disposablebox', this)">Disposable Pen Packaging</button>
+            <button class="filter-btn active" aria-pressed="true" onclick="filterProducts('all', this)">All Products</button>
+            <button class="filter-btn" aria-pressed="false" onclick="filterProducts('grinder', this)">Electric Herb Grinder</button>
+            <button class="filter-btn" aria-pressed="false" onclick="filterProducts('filter', this)">Smoking Filter</button>
+            <button class="filter-btn" aria-pressed="false" onclick="filterProducts('iron', this)">Soldering Iron Tool</button>
+            <button class="filter-btn" aria-pressed="false" onclick="filterProducts('paperbox', this)">Paper Box</button>
+            <button class="filter-btn" aria-pressed="false" onclick="filterProducts('plasticbag', this)">Plastic Bag</button>
+            <button class="filter-btn" aria-pressed="false" onclick="filterProducts('disposablebox', this)">Disposable Pen Packaging</button>
         </div>
 
         <div class="grid" id="product-grid"></div>
+
+        <!-- ===================== WHY CHOOSE US ===================== -->
+        <section class="section-block" id="why-us">
+            <div class="section-head">
+                <h2>Why Source From Us</h2>
+                <p>Built for serious wholesale buyers — transparent pricing, real customization, and reliable delivery.</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🏭</span>
+                    <h3>Factory-Direct Pricing</h3>
+                    <p>We manufacture and ship directly — no trading-company markup. The more you order, the lower your unit price.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🎨</span>
+                    <h3>OEM / ODM Customization</h3>
+                    <p>Custom logo, packaging and graphics available from 1,000 pcs. Build your own brand, not someone else's.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">💳</span>
+                    <h3>Secure Payment</h3>
+                    <p>Pay safely by credit card via Stripe, or by bank transfer (T/T). Clear quotes and invoices for every order.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🌍</span>
+                    <h3>Worldwide Shipping</h3>
+                    <p>Express courier for samples and small batches, sea freight for bulk. We ship to 60+ countries.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">✅</span>
+                    <h3>Quality Control</h3>
+                    <p>Every batch is inspected before dispatch. Sample orders are welcome so you can verify quality first.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Fast Response</h3>
+                    <p>Real people on WhatsApp and email. Most inquiries are answered within 12 hours, your timezone or ours.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== HOW TO ORDER ===================== -->
+        <section class="section-block">
+            <div class="section-head">
+                <h2>How to Order</h2>
+                <p>From browsing to delivery in four simple steps.</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h3>Add to Inquiry</h3>
+                    <p>Pick the products you need and add them to your inquiry list with target quantities.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h3>Get a Quote</h3>
+                    <p>Send your list via WhatsApp or email. We reply with best pricing, lead time and shipping cost.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h3>Confirm &amp; Pay</h3>
+                    <p>Approve the quote, confirm customization details, and pay securely by card or bank transfer.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">4</div>
+                    <h3>Production &amp; Shipping</h3>
+                    <p>We produce, quality-check and ship your order, with tracking provided every step of the way.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== ABOUT ===================== -->
+        <section class="section-block" id="about">
+            <div class="about-block">
+                <div>
+                    <h2>About <span>JR Electronic Limited</span></h2>
+                    <p>JR Electronic Limited is a cross-border wholesale manufacturer and supplier specializing in electric herb grinders, smoking filters, soldering iron tools and custom packaging solutions.</p>
+                    <p>We work directly with importers, distributors, retailers and brand owners worldwide — offering competitive factory pricing, flexible MOQs, and full OEM/ODM customization so you can grow your own brand with confidence.</p>
+                </div>
+                <ul class="about-points">
+                    <li>Registered company with verifiable business details</li>
+                    <li>Tiered wholesale pricing — lower cost at higher volume</li>
+                    <li>Custom logo, packaging &amp; graphics (MOQ 1,000 pcs)</li>
+                    <li>Samples available before bulk production</li>
+                    <li>Dedicated support on WhatsApp &amp; email</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ===================== PAYMENT & SHIPPING ===================== -->
+        <section class="section-block">
+            <div class="section-head">
+                <h2>Payment &amp; Shipping</h2>
+                <p>Flexible, secure options for buyers of every size.</p>
+            </div>
+            <div class="payship-grid">
+                <div class="payship-card">
+                    <h3>💳 Accepted Payments</h3>
+                    <div class="badge-row">
+                        <span class="pay-badge">💳 Visa</span>
+                        <span class="pay-badge">💳 Mastercard</span>
+                        <span class="pay-badge">💳 American Express</span>
+                        <span class="pay-badge">🔒 Stripe Secure Checkout</span>
+                        <span class="pay-badge">🏦 Bank Transfer (T/T)</span>
+                    </div>
+                </div>
+                <div class="payship-card">
+                    <h3>🚚 Shipping Methods</h3>
+                    <div class="badge-row">
+                        <span class="pay-badge">✈️ DHL Express</span>
+                        <span class="pay-badge">✈️ FedEx</span>
+                        <span class="pay-badge">✈️ UPS</span>
+                        <span class="pay-badge">🚢 Sea Freight (Bulk)</span>
+                        <span class="pay-badge">📦 Door-to-Door</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== FAQ ===================== -->
+        <section class="section-block" id="faq">
+            <div class="section-head">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know before placing your first order.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">What is your minimum order quantity (MOQ)? <span class="chev">+</span></button>
+                    <div class="faq-a">MOQ depends on the product — many items start from as few as 20 pcs. Custom logo and packaging orders start from 1,000 pcs. Each product page shows its own tiered quantities and pricing.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">Can I customize the logo and packaging? <span class="chev">+</span></button>
+                    <div class="faq-a">Yes. We offer full OEM/ODM services — custom logo, custom packaging and graphic design — from a minimum of 1,000 pcs. Send us your artwork and we'll prepare a quote and mock-up.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">How can I pay? <span class="chev">+</span></button>
+                    <div class="faq-a">You can pay by credit card (Visa, Mastercard, Amex) through Stripe's secure checkout, or by bank transfer (T/T). We provide a clear quote and invoice before any payment.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">Do you provide samples? <span class="chev">+</span></button>
+                    <div class="faq-a">Yes, sample orders are welcome so you can check quality before committing to a bulk order. Contact us for sample pricing and availability.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">How long does shipping take? <span class="chev">+</span></button>
+                    <div class="faq-a">Express courier (DHL/FedEx/UPS) typically takes 3–7 working days and is ideal for samples and smaller batches. For large bulk orders we use sea freight, which is more economical. Exact lead time is confirmed in your quote.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">How do I get a quotation? <span class="chev">+</span></button>
+                    <div class="faq-a">Add the products you're interested in to your Inquiry List, set your target quantities, then send it via WhatsApp or our inquiry form. We'll reply with our best wholesale price, lead time and shipping cost — usually within 12 hours.</div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <main id="detail-view">
         <button class="back-btn" onclick="goBackToList()">Back to Catalog</button>
-        
+
         <div class="detail-layout">
             <div class="detail-left">
                 <img id="detailImg" class="detail-img" src="" alt="Product Main Image">
+                <div class="gallery-thumbs" id="galleryThumbs"></div>
             </div>
-            
+
             <div class="detail-right">
                 <div id="detailCategory" class="detail-category">CATEGORY</div>
                 <h1 id="detailTitle" class="detail-title">Product Title</h1>
-                
+
                 <div class="price-table-container">
                     <div class="price-table-title">Wholesale Tiered Pricing</div>
                     <table>
@@ -155,15 +602,39 @@
                     </table>
                 </div>
 
-                <div class="attributes-container">
-                    <div class="attributes-title">Key Attributes</div>
-                    <div class="attributes-grid" id="attributesGrid">
+                <div class="bottom-two-col">
+                    <div class="attributes-container">
+                        <div class="attributes-title">Key Attributes</div>
+                        <div class="attributes-grid" id="attributesGrid"></div>
+                    </div>
+
+                    <div class="customization-container">
+                        <div class="customization-title">Customization <span style="font-size: 11px; font-weight: 400; color: #f59e0b;">(Min. 1,000 pcs)</span></div>
+                        <div class="customization-options">
+                            <div class="customization-option"><span class="customization-check">✅</span><span>Customized Logo</span></div>
+                            <div class="customization-option"><span class="customization-check">✅</span><span>Customized Packaging</span></div>
+                            <div class="customization-option"><span class="customization-check">✅</span><span>Graphic Customization</span></div>
+                        </div>
                     </div>
                 </div>
 
-                <button id="buyBtn" class="action-btn">
-                    <span id="buyBtnText">Contact Us For Order</span>
-                </button>
+                <div class="detail-qty-row">
+                    <label for="detailQtyInput">Quantity:</label>
+                    <div class="qty-stepper">
+                        <button type="button" onclick="stepDetailQty(-1)" aria-label="Decrease quantity">−</button>
+                        <input type="number" id="detailQtyInput" value="100" min="1" inputmode="numeric">
+                        <button type="button" onclick="stepDetailQty(1)" aria-label="Increase quantity">+</button>
+                    </div>
+                </div>
+
+                <div class="detail-btn-row">
+                    <button id="addInquiryBtn" class="action-btn cart-mode">
+                        <span>➕ Add to Inquiry List</span>
+                    </button>
+                    <button id="buyBtn" class="action-btn">
+                        <span id="buyBtnText">Contact Us For Order</span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -173,95 +644,456 @@
         </div>
     </main>
 
-    <footer>&copy; 2026 JR Electronic Limited. Cross-border Wholesale Direct Supplier.</footer>
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="brand">JR ELECTRONIC LIMITED</div>
+                <p>Cross-border wholesale manufacturer of electric herb grinders, smoking filters, soldering tools and custom packaging. Factory-direct pricing with OEM/ODM customization, shipping to 60+ countries.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="#" onclick="scrollToSection('catalog'); return false;">Products</a>
+                <a href="#" onclick="scrollToSection('why-us'); return false;">Why Choose Us</a>
+                <a href="#" onclick="scrollToSection('about'); return false;">About Us</a>
+                <a href="#" onclick="scrollToSection('faq'); return false;">FAQ</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="https://wa.me/85263658523" target="_blank">📱 WhatsApp: +852 6365 8523</a>
+                <a href="mailto:jrelectronicltd@gmail.com">📧 jrelectronicltd@gmail.com</a>
+                <a href="#" onclick="openInquiry(); return false;">📝 Send an Inquiry</a>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 JR Electronic Limited. All rights reserved. · Cross-border Wholesale Direct Supplier.</div>
+    </footer>
 
+    <!-- Floating Inquiry-Cart Button -->
+    <button class="cart-fab" onclick="openCart()" aria-label="Open inquiry list" title="Inquiry List">
+        🛒<span class="cart-badge hidden" id="cartBadge">0</span>
+    </button>
+
+    <!-- Shared backdrop -->
+    <div class="overlay-backdrop" id="overlayBackdrop" onclick="closeAllDrawers()"></div>
+
+    <!-- Inquiry Cart Drawer -->
+    <aside class="drawer" id="cartDrawer" role="dialog" aria-label="Inquiry list">
+        <div class="drawer-header">
+            <h2>🛒 Inquiry List</h2>
+            <button class="drawer-close" onclick="closeAllDrawers()" aria-label="Close">&times;</button>
+        </div>
+        <div class="drawer-body" id="cartBody"></div>
+        <div class="drawer-footer">
+            <button class="action-btn whatsapp-mode" style="margin-bottom:10px;" onclick="submitInquiryFromCart('whatsapp')">📱 Send All via WhatsApp</button>
+            <button class="action-btn" onclick="openInquiry()">📝 Send with Full Details (Form)</button>
+        </div>
+    </aside>
+
+    <!-- Inquiry Form Drawer -->
+    <aside class="drawer" id="inquiryDrawer" role="dialog" aria-label="Send inquiry">
+        <div class="drawer-header">
+            <h2>📝 Send Inquiry</h2>
+            <button class="drawer-close" onclick="closeAllDrawers()" aria-label="Close">&times;</button>
+        </div>
+        <div class="drawer-body">
+            <form id="inquiryForm" onsubmit="return submitInquiryForm(event)">
+                <div class="inq-field">
+                    <label for="inqName">Name / Company <span class="req">*</span></label>
+                    <input type="text" id="inqName" required autocomplete="name">
+                </div>
+                <div class="inq-field">
+                    <label for="inqEmail">Email <span class="req">*</span></label>
+                    <input type="email" id="inqEmail" required autocomplete="email">
+                </div>
+                <div class="inq-field">
+                    <label for="inqWhats">WhatsApp / Phone</label>
+                    <input type="tel" id="inqWhats" autocomplete="tel" placeholder="+1 234 567 890">
+                </div>
+                <div class="inq-field">
+                    <label for="inqCountry">Country</label>
+                    <input type="text" id="inqCountry" autocomplete="country-name">
+                </div>
+                <div class="inq-field">
+                    <label for="inqMsg">Message / Requirements</label>
+                    <textarea id="inqMsg" placeholder="Tell us your target quantity, customization needs, shipping destination..."></textarea>
+                </div>
+                <div class="inq-field">
+                    <label>Products in your inquiry</label>
+                    <div id="inqProductSummary" style="font-size:13px; color:var(--text-muted); line-height:1.6;"></div>
+                </div>
+                <button type="submit" data-channel="whatsapp" class="action-btn whatsapp-mode" style="margin-top:6px;">📱 Send via WhatsApp</button>
+                <button type="submit" data-channel="email" class="action-btn" style="margin-top:10px; background-color:var(--bg-soft); color:var(--text); border:1px solid var(--border-strong);">📧 Send via Email</button>
+                <p class="inq-hint">We'll open WhatsApp / your email app with all details pre-filled — review and hit send. Nothing is stored on a server.</p>
+            </form>
+        </div>
+    </aside>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- Product catalog data (managed via admin.html). Loaded before the app script. -->
+    <script src="products.js"></script>
     <script>
-        // 💡 Product Database - Stripe links preserved for products that have them
-        const myProducts = [
-            { 
-                id: 1, 
-                category: "grinder", 
-                name: "Premium Electric Herb Grinder", 
-                desc: "One-touch electric grinding with logo customization available.", 
-                img: "https://images.unsplash.com/photo-1588600878108-578307a3cc9d?auto=format&fit=crop&w=600&q=80",
-                detailImages: ["https://images.unsplash.com/photo-1620189507195-68309c04c4d0?auto=format&fit=crop&w=1200&q=80"],
-                tieredPrices: [
-                    { qty: "50 - 199 pcs", price: "$15.50" },
-                    { qty: "200 - 499 pcs", price: "$13.80" },
-                    { qty: "500+ pcs", price: "$12.00" }
+        // ⚠️ Starter/fallback list — only used if products.js fails to load.
+        // Your REAL catalog lives in products.js (edit it via admin.html).
+        const _fallbackProducts = [
+            {
+                id: 1,
+                category: "grinder",
+                name: "JR Premium Electric Herb/Tobacco Grinder (001)",
+                desc: "USB rechargable electric grinding with logo customization available.",
+                img: "images/a1.1.png",
+                detailImages: [
+                    "images/a2.jpeg",
+                    "images/a3.jpeg",
+                    "images/a4.jpeg",
+                    "images/a5.png"
                 ],
-                stripeLink: "https://buy.stripe.com/YOUR_STRIPE_LINK", // ✅ Keep Stripe link
+                tieredPrices: [
+                    { qty: "20 - 99 pcs", price: "US$8.50" },
+                    { qty: "100 - 999 pcs", price: "US$7.90" },
+                    { qty: "1000+ pcs", price: "US$7.60" }
+                ],
+                stripeLink: "",
                 attributes: {
-                    "Material": "Aerospace Aluminum / ABS",
-                    "Battery Capacity": "1100mAh Rechargeable",
-                    "Customization": "Support OEM Logo / Color",
-                    "Certification": "CE / RoHS / FCC",
-                    "Place of Origin": "Shenzhen, China",
-                    "Lead Time": "7 - 15 Days"
+                    "Material": "Glass",
+                    "Color": "Black",
+                    "Brand Name": "JRG",
+                    "Model Number": "G1",
+                    "Place of Origin": "China",
+                    "Product Name": "Herb Grinder"
                 }
             },
-            { 
-                id: 11, 
-                category: "filter", 
-                name: "Nano Core Smoking Filter", 
-                desc: "Nano-level filtration that effectively reduces tar.", 
-                img: "https://images.unsplash.com/photo-1528318269466-4e565983758b?auto=format&fit=crop&w=600&q=80",
-                detailImages: ["images/image_0a3348.jpg"],
-                tieredPrices: [
-                    { qty: "100 - 499 boxes", price: "$2.50" },
-                    { qty: "500 - 1999 boxes", price: "$2.10" },
-                    { qty: "2000+ boxes", price: "$1.85" }
+            {
+                id: 2,
+                category: "grinder",
+                name: "JR Premium Electric Herb/Tobacco Grinder (002)",
+                desc: "USB rechargable electric grinding with logo customization available.",
+                img: "images/a1.2.png",
+                detailImages: [
+                    "images/a2.jpeg",
+                    "images/a3.jpeg",
+                    "images/a4.jpeg",
+                    "images/a5.png"
                 ],
-                stripeLink: "", // ❌ No Stripe = goes to WhatsApp
+                tieredPrices: [
+                    { qty: "20 - 99 pcs", price: "US$8.50" },
+                    { qty: "100 - 999 pcs", price: "US$7.90" },
+                    { qty: "1000+ pcs", price: "US$7.60" }
+                ],
+                stripeLink: "",
                 attributes: {
-                    "Material": "Food-grade Fiber / Acetate Cellulose",
-                    "Efficiency": "Reduces up to 80% Tar",
-                    "Packaging": "50 pcs per box",
-                    "Feature": "Flavor Preservation Tech",
-                    "MOQ": "100 boxes",
-                    "Place of Origin": "China"
+                    "Material": "Glass",
+                    "Color": "Black",
+                    "Brand Name": "JRG",
+                    "Model Number": "G1",
+                    "Place of Origin": "China",
+                    "Product Name": "Herb Grinder"
+                }
+            },
+            {
+                id: 3,
+                category: "grinder",
+                name: "JR Premium Electric Herb/Tobacco Grinder (003)",
+                desc: "USB rechargable electric grinding with logo customization available.",
+                img: "images/a1.3.png",
+                detailImages: [
+                    "images/a2.jpeg",
+                    "images/a3.jpeg",
+                    "images/a4.jpeg",
+                    "images/a5.png"
+                ],
+                tieredPrices: [
+                    { qty: "20 - 99 pcs", price: "US$8.50" },
+                    { qty: "100 - 999 pcs", price: "US$7.90" },
+                    { qty: "1000+ pcs", price: "US$7.60" }
+                ],
+                stripeLink: "",
+                attributes: {
+                    "Material": "Glass",
+                    "Color": "Black",
+                    "Brand Name": "JRG",
+                    "Model Number": "G1",
+                    "Place of Origin": "China",
+                    "Product Name": "Herb Grinder"
+                }
+            },
+            {
+                id: 4,
+                category: "grinder",
+                name: "Yocan Draco Electric Herb/Tobacco Grinder (Black)",
+                desc: "USB rechargable electric grinding with logo customization available.",
+                img: "images/b1.1.jpeg",
+                detailImages: [
+                    "images/b2.jpeg",
+                    "images/b3.jpeg",
+                    "images/b4.jpeg",
+                    "images/b5.jpeg",
+                    "images/b6.jpeg"
+                ],
+                tieredPrices: [
+                    { qty: "20 - 99 pcs", price: "US$20.99" },
+                    { qty: "100 - 999 pcs", price: "US$19.99" },
+                    { qty: "1000+ pcs", price: "US$18.99" }
+                ],
+                stripeLink: "",
+                attributes: {
+                    "Material": "Glass",
+                    "Color": "Black",
+                    "Brand Name": "JRG",
+                    "Model Number": "G1",
+                    "Place of Origin": "China",
+                    "Product Name": "Herb Grinder"
+                }
+            },
+            {
+                id: 5,
+                category: "grinder",
+                name: "Yocan Draco  Electric Herb/Tobacco Grinder (Purple)",
+                desc: "USB rechargable electric grinding with logo customization available.",
+                img: "images/b1.2.jpeg",
+                detailImages: [
+                    "images/b2.jpeg",
+                    "images/b3.jpeg",
+                    "images/b4.jpeg",
+                    "images/b5.jpeg",
+                    "images/b6.jpeg"
+                ],
+                tieredPrices: [
+                    { qty: "20 - 99 pcs", price: "US$20.99" },
+                    { qty: "100 - 999 pcs", price: "US$19.99" },
+                    { qty: "1000+ pcs", price: "US$18.99" }
+                ],
+                stripeLink: "",
+                attributes: {
+                    "Material": "Glass",
+                    "Color": "Purple",
+                    "Brand Name": "JRG",
+                    "Model Number": "G1",
+                    "Place of Origin": "China",
+                    "Product Name": "Herb Grinder"
+                }
+            },
+            {
+                id: 6,
+                category: "grinder",
+                name: "Yocan Draco  Electric Herb/Tobacco Grinder (Pink)",
+                desc: "USB rechargable electric grinding with logo customization available.",
+                img: "images/b1.3.jpeg",
+                detailImages: [
+                    "images/b2.jpeg",
+                    "images/b3.jpeg",
+                    "images/b4.jpeg",
+                    "images/b5.jpeg",
+                    "images/b6.jpeg"
+                ],
+                tieredPrices: [
+                    { qty: "20 - 99 pcs", price: "US$20.99" },
+                    { qty: "100 - 999 pcs", price: "US$19.99" },
+                    { qty: "1000+ pcs", price: "US$18.99" }
+                ],
+                stripeLink: "",
+                attributes: {
+                    "Material": "Glass",
+                    "Color": "Pink",
+                    "Brand Name": "JRG",
+                    "Model Number": "G1",
+                    "Place of Origin": "China",
+                    "Product Name": "Herb Grinder"
+                }
+            },
+            {
+                id: 7,
+                category: "grinder",
+                name: "Yocan Draco Electric Herb/Tobacco Grinder (Blue)",
+                desc: "USB rechargable electric grinding with logo customization available.",
+                img: "images/b1.4.jpeg",
+                detailImages: [
+                    "images/b2.jpeg",
+                    "images/b3.jpeg",
+                    "images/b4.jpeg",
+                    "images/b5.jpeg",
+                    "images/b6.jpeg"
+                ],
+                tieredPrices: [
+                    { qty: "20 - 99 pcs", price: "US$20.99" },
+                    { qty: "100 - 999 pcs", price: "US$19.99" },
+                    { qty: "1000+ pcs", price: "US$18.99" }
+                ],
+                stripeLink: "",
+                attributes: {
+                    "Material": "Glass",
+                    "Color": "Blue",
+                    "Brand Name": "JRG",
+                    "Model Number": "G1",
+                    "Place of Origin": "China",
+                    "Product Name": "Herb Grinder"
+                }
+            },
+            {
+                id: 8,
+                category: "grinder",
+                name: "Yocan Draco Electric Herb/Tobacco Grinder (Silver)",
+                desc: "USB rechargable electric grinding with logo customization available.",
+                img: "images/b1.5.jpeg",
+                detailImages: [
+                    "images/b2.jpeg",
+                    "images/b3.jpeg",
+                    "images/b4.jpeg",
+                    "images/b5.jpeg",
+                    "images/b6.jpeg"
+                ],
+                tieredPrices: [
+                    { qty: "20 - 99 pcs", price: "US$20.99" },
+                    { qty: "100 - 999 pcs", price: "US$19.99" },
+                    { qty: "1000+ pcs", price: "US$18.99" }
+                ],
+                stripeLink: "",
+                attributes: {
+                    "Material": "Glass",
+                    "Color": "Silver",
+                    "Brand Name": "JRG",
+                    "Model Number": "G1",
+                    "Place of Origin": "China",
+                    "Product Name": "Herb Grinder"
+                }
+            },
+            {
+                id: 9,
+                category: "grinder",
+                name: "Yocan Whirly Electric Herb/Tobacco Grinder (Black)",
+                desc: "Electric grinding with logo customization available.",
+                img: "images/c1.1.jpeg",
+                detailImages: [
+                    "images/c2.jpeg",
+                    "images/c3.png",
+                ],
+                tieredPrices: [
+                    { qty: "20 - 99 pcs", price: "US$8.50" },
+                    { qty: "100 - 999 pcs", price: "US$7.90" },
+                    { qty: "1000+ pcs", price: "US$7.60" }
+                ],
+                stripeLink: "",
+                attributes: {
+                    "Material": "Glass",
+                    "Color": "Black",
+                    "Brand Name": "JRG",
+                    "Model Number": "Whirly",
+                    "Place of Origin": "Guangdong, China",
+                    "Product Name": "Tobacco Grinder"
+                }
+            },
+            {
+                id: 10,
+                category: "grinder",
+                name: "Yocan Whirly Electric Herb/Tobacco Grinder (Silver)",
+                desc: "Electric grinding with logo customization available.",
+                img: "images/c1.2.jpeg",
+                detailImages: [
+                    "images/c2.jpeg",
+                    "images/c3.png",
+                ],
+                tieredPrices: [
+                    { qty: "20 - 99 pcs", price: "US$8.50" },
+                    { qty: "100 - 999 pcs", price: "US$7.90" },
+                    { qty: "1000+ pcs", price: "US$7.60" }
+                ],
+                stripeLink: "",
+                attributes: {
+                    "Material": "Glass",
+                    "Color": "Silver",
+                    "Brand Name": "JRG",
+                    "Model Number": "Whirly",
+                    "Place of Origin": "Guangdong, China",
+                    "Product Name": "Tobacco Grinder"
+                }
+            },
+            {
+                id: 11,
+                category: "filter",
+                name: "Yocan Green Disposable Smoke Air Purifier (Plastic)",
+                desc: "Removes secondhand smoke and tobacco odor",
+                img: "images/d1.png",
+                detailImages: [
+                    "images/d2.jpeg",
+                    "images/d3.jpeg",
+                    "images/d4.jpeg",
+                    "images/d5.jpeg",
+                ],
+                tieredPrices: [
+                    { qty: "100 - 1999 pcs", price: "US$8.90" },
+                    { qty: "2000 - 9999 pcs", price: "US$8.50" },
+                    { qty: "10000+ pcs", price: "US$7.90" }
+                ],
+                stripeLink: "",
+                attributes: {
+                    "Material": "Plastic",
+                    "Color": "5 colors",
+                    "Brand Name": "Yocan",
+                    "Model Number": "Yocan Green",
+                    "Place of Origin": "China",
+                    "Product Name": "Smoking Filter"
+                }
+            },
+            {
+                id: 12,
+                category: "filter",
+                name: "Yocan Green Disposable Smoke Air Purifier (Penguin)",
+                desc: "Removes secondhand smoke and tobacco odor",
+                img: "images/e1.png",
+                detailImages: [
+                    "images/e2.jpeg",
+                    "images/e3.jpeg",
+                    "images/e4.png",
+                    "images/e5.jpeg",
+                ],
+                tieredPrices: [
+                    { qty: "100 - 999 pcs", price: "US$7.30" },
+                    { qty: "1000 - 4999 pcs", price: "US$6.90" },
+                    { qty: "5000+ pcs", price: "US$6.40" }
+                ],
+                stripeLink: "",
+                attributes: {
+                    "Material": "Silicone",
+                    "Color": "4 colors",
+                    "Brand Name": "Yocan",
+                    "Model Number": "Penguin",
+                    "Place of Origin": "China",
+                    "Product Name": "Smoking Filter"
                 }
             }
         ];
 
-        // 🤖 Auto-generate remaining products
+        // The LIVE catalog: use products.js (window.PRODUCTS) when present,
+        // otherwise fall back to the starter list above.
+        const myProducts = (Array.isArray(window.PRODUCTS) && window.PRODUCTS.length)
+            ? window.PRODUCTS.map(p => ({ ...p }))
+            : _fallbackProducts;
+
+        // Optional "coming soon" placeholder slots for category ranges not yet
+        // filled. A placeholder disappears automatically once a real product
+        // with the same id exists. Delete this block if you don't want them.
         const categoriesData = [
-            { cat: "grinder", start: 2, end: 10 },
-            { cat: "filter", start: 12, end: 20 },
+            { cat: "filter", start: 13, end: 20 },
             { cat: "iron", start: 21, end: 31 },
             { cat: "paperbox", start: 32, end: 34 },
             { cat: "plasticbag", start: 35, end: 36 },
             { cat: "disposablebox", start: 37, end: 48 }
         ];
-
         categoriesData.forEach(group => {
             for (let i = group.start; i <= group.end; i++) {
+                if (myProducts.some(p => p.id === i)) continue;
                 myProducts.push({
                     id: i,
                     category: group.cat,
-                    name: `JR Reserved Model #${i}`,
-                    desc: "Click to view detailed specifications, attributes, and wholesale pricing.",
+                    name: `Pending Product #${i}`,
+                    desc: "Data to be added...",
                     img: "",
                     detailImages: [],
-                    tieredPrices: [
-                        { qty: "100 - 499 pcs", price: "Contact Us" },
-                        { qty: "500 - 999 pcs", price: "Contact Us" },
-                        { qty: "1000+ pcs", price: "Contact Us" }
-                    ],
+                    tieredPrices: [],
                     stripeLink: "",
-                    attributes: {
-                        "Material": "TBD",
-                        "Size / Dimension": "Standard Wholesale Size",
-                        "Custom Logo": "Available Upon Request",
-                        "Packaging": "Export Standard Carton",
-                        "Place of Origin": "Guangdong, China",
-                        "Certification": "Compliant Standard"
-                    }
+                    attributes: {}
                 });
             }
         });
-
-        myProducts.sort((a, b) => a.id - b.id);
 
         const defaultImg = "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=600&q=80";
         const gridContainer = document.getElementById('product-grid');
@@ -269,63 +1101,110 @@
         const listView = document.getElementById('list-view');
         const detailView = document.getElementById('detail-view');
 
-        // ✅ Your WhatsApp number (replace with your actual number)
         const WHATSAPP_NUMBER = "85263658523";
 
         function renderProducts(productsToRender) {
-            gridContainer.innerHTML = ''; 
             if (productsToRender.length === 0) {
                 gridContainer.innerHTML = '<div class="no-products">No products found in this category.</div>';
             } else {
-                productsToRender.forEach(product => {
-                    const cardHtml = `
+                const cardsHtml = productsToRender.map(product => `
                         <div class="product-card" onclick="goToDetail(${product.id})">
-                            <div class="product-img" style="background-image: url('${product.img || defaultImg}');"></div>
+                            <div class="product-img" role="img" aria-label="${product.name}" style="background-image: url('${product.img || defaultImg}');"></div>
                             <div class="product-info">
                                 <h3>${product.name}</h3>
                                 <p class="product-desc">${product.desc}</p>
                                 <div class="specs">
                                     <span>👉 Click to view details & attributes</span>
                                 </div>
+                                ${product.img ? `<button class="card-cart-btn" onclick="event.stopPropagation(); addToInquiry(${product.id})">➕ Add to Inquiry</button>` : ''}
                             </div>
                         </div>
-                    `;
-                    gridContainer.innerHTML += cardHtml;
-                });
+                    `);
+                gridContainer.innerHTML = cardsHtml.join('');
             }
             countNum.innerText = productsToRender.length;
         }
 
+        let currentCategory = 'all';
+        let currentSearch = '';
+
+        function applyFilters() {
+            let filtered = currentCategory === 'all' ? myProducts : myProducts.filter(product => product.category === currentCategory);
+            if (currentSearch) {
+                filtered = filtered.filter(product =>
+                    product.name.toLowerCase().includes(currentSearch) ||
+                    product.desc.toLowerCase().includes(currentSearch)
+                );
+            }
+            renderProducts(filtered);
+        }
+
         function filterProducts(category, clickedBtn) {
             const allBtns = document.querySelectorAll('.filter-btn');
-            allBtns.forEach(btn => btn.classList.remove('active'));
+            allBtns.forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-pressed', 'false');
+            });
             clickedBtn.classList.add('active');
-            let filtered = category === 'all' ? myProducts : myProducts.filter(product => product.category === category);
-            renderProducts(filtered);
+            clickedBtn.setAttribute('aria-pressed', 'true');
+            currentCategory = category;
+            applyFilters();
+        }
+
+        function handleSearch(value) {
+            currentSearch = value.trim().toLowerCase();
+            applyFilters();
         }
 
         function goToDetail(productId) {
             const product = myProducts.find(p => p.id === productId);
             if (product) {
-                document.getElementById('detailImg').src = product.img || defaultImg;
+                const detailImg = document.getElementById('detailImg');
+                detailImg.onerror = () => { detailImg.onerror = null; detailImg.src = defaultImg; };
+                detailImg.src = product.img || defaultImg;
                 document.getElementById('detailCategory').innerText = product.category.toUpperCase();
                 document.getElementById('detailTitle').innerText = product.name;
-                
-                // 1. Render pricing table
+
+                // --- Image gallery thumbnails (main image + detail images) ---
+                const galleryThumbs = document.getElementById('galleryThumbs');
+                galleryThumbs.innerHTML = '';
+                const galleryImgs = [product.img, ...(product.detailImages || [])].filter(Boolean);
+                if (galleryImgs.length > 1) {
+                    galleryImgs.forEach((src, i) => {
+                        const thumb = document.createElement('div');
+                        thumb.className = 'gallery-thumb' + (i === 0 ? ' active' : '');
+                        thumb.style.backgroundImage = `url('${src}')`;
+                        thumb.setAttribute('role', 'button');
+                        thumb.setAttribute('aria-label', `View image ${i + 1}`);
+                        thumb.onclick = () => {
+                            detailImg.src = src;
+                            galleryThumbs.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+                            thumb.classList.add('active');
+                        };
+                        galleryThumbs.appendChild(thumb);
+                    });
+                }
+
+                // --- Reset quantity stepper to the product's MOQ-ish default ---
+                document.getElementById('detailQtyInput').value = 100;
+
                 const tbody = document.getElementById('priceTableBody');
-                tbody.innerHTML = ''; 
+                tbody.innerHTML = '';
                 if (product.tieredPrices && product.tieredPrices.length > 0) {
                     product.tieredPrices.forEach(tier => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `<td class="qty">${tier.qty}</td><td class="price">${tier.price}</td>`;
                         tbody.appendChild(tr);
                     });
+                } else {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td class="qty" colspan="2">Price info pending...</td>`;
+                    tbody.appendChild(tr);
                 }
 
-                // 2. Render Key Attributes
                 const attrGrid = document.getElementById('attributesGrid');
                 attrGrid.innerHTML = '';
-                if (product.attributes) {
+                if (product.attributes && Object.keys(product.attributes).length > 0) {
                     for (const [key, value] of Object.entries(product.attributes)) {
                         const itemHtml = `
                             <div class="attribute-item">
@@ -335,58 +1214,295 @@
                         `;
                         attrGrid.innerHTML += itemHtml;
                     }
+                } else {
+                    attrGrid.innerHTML = '<div style="color: var(--text-muted); font-size: 13px;">Attributes pending...</div>';
                 }
 
-                // 3. Handle button actions - Stripe OR WhatsApp
+                // --- Add to Inquiry button uses the chosen quantity ---
+                const addInquiryBtn = document.getElementById('addInquiryBtn');
+                addInquiryBtn.onclick = () => {
+                    const qty = getDetailQty();
+                    addToInquiry(product.id, qty);
+                };
+
                 const buyBtn = document.getElementById('buyBtn');
                 const buyBtnText = document.getElementById('buyBtnText');
                 buyBtn.onclick = null;
 
                 if (product.stripeLink && product.stripeLink !== "") {
-                    // ✅ Has Stripe link → Stripe checkout
-                    buyBtn.className = "action-btn stripe-mode"; 
-                    buyBtnText.innerHTML = "💳 Buy Now via Stripe";
-                    buyBtn.onclick = function() { 
-                        window.open(product.stripeLink, '_blank'); 
-                    };
+                    buyBtn.className = "action-btn stripe-mode";
+                    buyBtnText.innerText = "Buy via Stripe";
+                    buyBtn.onclick = () => window.open(product.stripeLink, '_blank');
                 } else {
-                    // ❌ No Stripe → WhatsApp inquiry
-                    buyBtn.className = "action-btn whatsapp-mode"; 
-                    buyBtnText.innerHTML = "💬 Inquire via WhatsApp";
-                    buyBtn.onclick = function() {
-                        const message = encodeURIComponent("Hello JR Electronic, I am interested in: " + product.name);
-                        window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + message, '_blank');
+                    buyBtn.className = "action-btn whatsapp-mode";
+                    buyBtnText.innerText = "Order via WhatsApp";
+                    buyBtn.onclick = () => {
+                        const qty = getDetailQty();
+                        const msg = `Hello JR Electronic, I am interested in:\n• ${product.name} (ID: ${product.id})\n• Quantity: ${qty} pcs\nPlease provide your best price and details.`;
+                        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
                     };
                 }
 
-                // 4. Load detail images
-                const imagesContainer = document.getElementById('detailImagesContainer');
-                const imagesWrapper = document.getElementById('detailImagesWrapper');
-                imagesWrapper.innerHTML = ''; 
-                
+                const imgContainer = document.getElementById('detailImagesContainer');
+                const imgWrapper = document.getElementById('detailImagesWrapper');
+                imgWrapper.innerHTML = '';
+
                 if (product.detailImages && product.detailImages.length > 0) {
-                    imagesContainer.style.display = 'block';
-                    product.detailImages.forEach(imgUrl => {
+                    product.detailImages.forEach(src => {
                         const img = document.createElement('img');
-                        img.src = imgUrl;
-                        imagesWrapper.appendChild(img);
+                        img.loading = 'lazy';
+                        img.decoding = 'async';
+                        img.onerror = () => { img.onerror = null; img.src = defaultImg; };
+                        img.src = src;
+                        img.alt = "Product Detail Sub-Image";
+                        imgWrapper.appendChild(img);
                     });
+                    imgContainer.style.display = 'block';
                 } else {
-                    imagesContainer.style.display = 'none';
+                    imgContainer.style.display = 'none';
                 }
 
                 listView.style.display = 'none';
                 detailView.style.display = 'block';
-                window.scrollTo(0, 0); 
+                window.scrollTo(0,0);
             }
         }
 
         function goBackToList() {
             detailView.style.display = 'none';
             listView.style.display = 'block';
+            window.scrollTo(0,0);
         }
 
-        renderProducts(myProducts);
+        /* ===================== QUANTITY STEPPER (detail page) ===================== */
+        function getDetailQty() {
+            const input = document.getElementById('detailQtyInput');
+            let v = parseInt(input.value, 10);
+            if (isNaN(v) || v < 1) v = 1;
+            input.value = v;
+            return v;
+        }
+        function stepDetailQty(delta) {
+            const input = document.getElementById('detailQtyInput');
+            let v = parseInt(input.value, 10);
+            if (isNaN(v)) v = 1;
+            v = Math.max(1, v + delta);
+            input.value = v;
+        }
+
+        /* ===================== INQUIRY CART (RFQ) ===================== */
+        const CART_KEY = 'jr_inquiry_cart';
+        let inquiryCart = [];
+
+        function loadCart() {
+            try {
+                const raw = localStorage.getItem(CART_KEY);
+                inquiryCart = raw ? JSON.parse(raw) : [];
+                if (!Array.isArray(inquiryCart)) inquiryCart = [];
+            } catch (e) { inquiryCart = []; }
+        }
+        function saveCart() {
+            try { localStorage.setItem(CART_KEY, JSON.stringify(inquiryCart)); } catch (e) {}
+        }
+
+        function addToInquiry(productId, qty) {
+            const product = myProducts.find(p => p.id === productId);
+            if (!product) return;
+            const quantity = (qty && qty > 0) ? qty : 100;
+            const existing = inquiryCart.find(item => item.id === productId);
+            if (existing) {
+                existing.qty = quantity; // update to latest chosen quantity
+                showToast(`Updated quantity for "${shortName(product.name)}"`);
+            } else {
+                inquiryCart.push({ id: productId, qty: quantity });
+                showToast(`Added "${shortName(product.name)}" to inquiry`);
+            }
+            saveCart();
+            updateCartBadge();
+            renderCart();
+        }
+
+        function removeFromInquiry(productId) {
+            inquiryCart = inquiryCart.filter(item => item.id !== productId);
+            saveCart();
+            updateCartBadge();
+            renderCart();
+        }
+
+        function updateCartQty(productId, value) {
+            let v = parseInt(value, 10);
+            if (isNaN(v) || v < 1) v = 1;
+            const item = inquiryCart.find(i => i.id === productId);
+            if (item) { item.qty = v; saveCart(); }
+        }
+
+        function shortName(name) {
+            return name.length > 32 ? name.slice(0, 30) + '…' : name;
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            const n = inquiryCart.length;
+            badge.innerText = n;
+            badge.classList.toggle('hidden', n === 0);
+        }
+
+        function renderCart() {
+            const body = document.getElementById('cartBody');
+            if (inquiryCart.length === 0) {
+                body.innerHTML = '<div class="cart-empty">Your inquiry list is empty.<br><br>Browse products and tap “➕ Add to Inquiry”.</div>';
+                return;
+            }
+            body.innerHTML = inquiryCart.map(item => {
+                const p = myProducts.find(pr => pr.id === item.id) || {};
+                return `
+                    <div class="cart-item">
+                        <div class="cart-item-img" style="background-image:url('${p.img || defaultImg}');"></div>
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${p.name || 'Product'}</div>
+                            <div class="qty-stepper" style="margin-bottom:8px;">
+                                <button type="button" onclick="cartStep(${item.id}, -1)" aria-label="Decrease">−</button>
+                                <input type="number" min="1" value="${item.qty}" inputmode="numeric"
+                                       onchange="updateCartQty(${item.id}, this.value)">
+                                <button type="button" onclick="cartStep(${item.id}, 1)" aria-label="Increase">+</button>
+                            </div>
+                            <button class="cart-item-remove" onclick="removeFromInquiry(${item.id})">Remove</button>
+                        </div>
+                    </div>`;
+            }).join('');
+        }
+
+        function cartStep(productId, delta) {
+            const item = inquiryCart.find(i => i.id === productId);
+            if (!item) return;
+            item.qty = Math.max(1, item.qty + delta);
+            saveCart();
+            renderCart();
+        }
+
+        /* ===================== DRAWERS ===================== */
+        function openCart() {
+            renderCart();
+            document.getElementById('overlayBackdrop').classList.add('open');
+            document.getElementById('cartDrawer').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function openInquiry() {
+            renderInquirySummary();
+            document.getElementById('overlayBackdrop').classList.add('open');
+            document.getElementById('cartDrawer').classList.remove('open');
+            document.getElementById('inquiryDrawer').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeAllDrawers() {
+            document.getElementById('overlayBackdrop').classList.remove('open');
+            document.getElementById('cartDrawer').classList.remove('open');
+            document.getElementById('inquiryDrawer').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAllDrawers(); });
+
+        /* ===================== INQUIRY MESSAGE BUILDING ===================== */
+        function cartLines() {
+            if (inquiryCart.length === 0) return '';
+            return inquiryCart.map((item, idx) => {
+                const p = myProducts.find(pr => pr.id === item.id) || {};
+                return `${idx + 1}. ${p.name || 'Product'} (ID: ${item.id}) — Qty: ${item.qty} pcs`;
+            }).join('\n');
+        }
+
+        function renderInquirySummary() {
+            const el = document.getElementById('inqProductSummary');
+            if (inquiryCart.length === 0) {
+                el.innerHTML = '<em style="color:var(--text-faint);">No products added yet — your message will be sent without a product list.</em>';
+            } else {
+                el.innerHTML = inquiryCart.map(item => {
+                    const p = myProducts.find(pr => pr.id === item.id) || {};
+                    return `• ${p.name || 'Product'} × ${item.qty} pcs`;
+                }).join('<br>');
+            }
+        }
+
+        function submitInquiryFromCart(channel) {
+            if (inquiryCart.length === 0) { showToast('Your inquiry list is empty'); return; }
+            const msg = `Hello JR Electronic, I would like a quotation for the following items:\n\n${cartLines()}\n\nPlease send your best wholesale prices and lead time. Thank you.`;
+            if (channel === 'whatsapp') {
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+            }
+        }
+
+        const INQUIRY_EMAIL = "jrelectronicltd@gmail.com";
+
+        function submitInquiryForm(event) {
+            event.preventDefault();
+            const name = document.getElementById('inqName').value.trim();
+            const email = document.getElementById('inqEmail').value.trim();
+            const whats = document.getElementById('inqWhats').value.trim();
+            const country = document.getElementById('inqCountry').value.trim();
+            const note = document.getElementById('inqMsg').value.trim();
+
+            let body = `New inquiry from website\n\n`;
+            body += `Name / Company: ${name}\n`;
+            body += `Email: ${email}\n`;
+            if (whats) body += `WhatsApp / Phone: ${whats}\n`;
+            if (country) body += `Country: ${country}\n`;
+            body += `\nProducts of interest:\n${inquiryCart.length ? cartLines() : '(none specified)'}\n`;
+            if (note) body += `\nMessage:\n${note}\n`;
+
+            // Prefer WhatsApp (fastest for trade) when a channel choice isn't given.
+            const waMsg = `Hello JR Electronic, my name is ${name}${country ? ' from ' + country : ''}.\n\n`
+                + `${inquiryCart.length ? 'I am interested in:\n' + cartLines() + '\n\n' : ''}`
+                + `${note ? note + '\n\n' : ''}`
+                + `My email: ${email}${whats ? ' | Phone: ' + whats : ''}`;
+
+            const channel = event.submitter && event.submitter.dataset.channel === 'email' ? 'email' : 'whatsapp';
+            if (channel === 'email') {
+                const subject = `Wholesale Inquiry — ${name}`;
+                window.location.href = `mailto:${INQUIRY_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                showToast('Opening your email app…');
+            } else {
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsg)}`, '_blank');
+                showToast('Opening WhatsApp…');
+            }
+            closeAllDrawers();
+            return false;
+        }
+
+        /* ===================== TOAST ===================== */
+        let toastTimer = null;
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+        }
+
+        /* ===================== FAQ ACCORDION ===================== */
+        function toggleFaq(btn) {
+            const item = btn.closest('.faq-item');
+            const wasOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+            if (!wasOpen) item.classList.add('open');
+        }
+
+        /* ===================== SMOOTH SCROLL TO SECTION ===================== */
+        /* Works even from the detail view: return to catalog first, then scroll. */
+        function scrollToSection(id) {
+            if (detailView.style.display === 'block') {
+                goBackToList();
+            }
+            setTimeout(() => {
+                const el = document.getElementById(id);
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 60);
+        }
+
+        window.onload = () => {
+            loadCart();
+            updateCartBadge();
+            renderProducts(myProducts);
+        };
     </script>
 </body>
 </html>

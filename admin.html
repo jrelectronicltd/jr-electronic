@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Manager — JR Electronic Limited</title>
+    <style>
+        :root {
+            --bg: #ffffff; --bg-soft: #f6f8fb; --bg-soft2: #eef2f7;
+            --text: #1a2233; --text-muted: #5b6573; --text-faint: #95a0b0;
+            --accent: #2563eb; --accent-dark: #1d4ed8;
+            --accent-soft: rgba(37, 99, 235, 0.08); --accent-soft2: rgba(37, 99, 235, 0.14);
+            --border: #e6e9ef; --border-strong: #d3dae4;
+            --shadow: 0 1px 3px rgba(16, 24, 40, 0.06), 0 1px 2px rgba(16, 24, 40, 0.04);
+            --shadow-hover: 0 12px 28px rgba(16, 24, 40, 0.12);
+            --danger: #ef4444; --ok: #16a34a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; }
+        body { background: var(--bg-soft); color: var(--text); padding-top: 76px; }
+
+        header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); box-shadow: 0 1px 12px rgba(16,24,40,0.04); display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 28px; flex-wrap: wrap; }
+        header .brand { font-size: 17px; font-weight: 800; color: var(--accent); letter-spacing: 0.5px; }
+        header .brand small { display: block; font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: 0; }
+        header .tools { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        .count-pill { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 13px; color: var(--text-muted); }
+        .count-pill strong { color: var(--accent); }
+
+        .btn { border: none; border-radius: 8px; padding: 10px 18px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 7px; }
+        .btn.primary { background: var(--accent); color: #fff; }
+        .btn.primary:hover { background: var(--accent-dark); }
+        .btn.ghost { background: #fff; color: var(--text); border: 1px solid var(--border-strong); }
+        .btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+        .btn.danger { background: #fff; color: var(--danger); border: 1px solid var(--border-strong); }
+        .btn.danger:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
+        .btn.sm { padding: 6px 12px; font-size: 12.5px; }
+
+        main { max-width: 1400px; margin: 0 auto; padding: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: start; }
+        @media (max-width: 960px) { main { grid-template-columns: 1fr; } }
+
+        .panel { background: #fff; border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow); padding: 24px; }
+        .panel.editor { position: sticky; top: 92px; }
+        @media (max-width: 960px) { .panel.editor { position: static; } }
+        .panel h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+        .panel .sub { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+
+        .field { margin-bottom: 16px; }
+        .field > label { display: block; font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+        .field input[type=text], .field textarea, .field select { width: 100%; padding: 11px 14px; background: #fff; border: 1px solid var(--border-strong); border-radius: 8px; color: var(--text); font-size: 14px; outline: none; transition: border-color 0.2s; }
+        .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+        .field textarea { resize: vertical; min-height: 70px; }
+
+        /* Drop zones */
+        .dropzone { border: 2px dashed var(--border-strong); border-radius: 10px; padding: 20px; text-align: center; color: var(--text-muted); font-size: 13.5px; cursor: pointer; transition: all 0.2s; background: var(--bg-soft); }
+        .dropzone:hover, .dropzone.drag { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+        .dropzone strong { color: var(--accent); }
+        .thumb-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+        .thumb { position: relative; width: 76px; height: 76px; border-radius: 8px; background-size: cover; background-position: center; background-color: var(--bg-soft2); border: 1px solid var(--border); }
+        .thumb .x { position: absolute; top: -7px; right: -7px; width: 22px; height: 22px; border-radius: 50%; background: var(--danger); color: #fff; border: 2px solid #fff; font-size: 13px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .thumb.main-tag::after { content: "MAIN"; position: absolute; bottom: 0; left: 0; right: 0; background: rgba(37,99,235,0.85); color: #fff; font-size: 9px; font-weight: 700; text-align: center; padding: 2px 0; }
+
+        /* Repeatable rows */
+        .rows { display: flex; flex-direction: column; gap: 8px; }
+        .row2 { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; }
+        .row2 input { padding: 9px 12px; border: 1px solid var(--border-strong); border-radius: 8px; font-size: 13.5px; outline: none; }
+        .row2 input:focus { border-color: var(--accent); }
+        .row-x { background: var(--bg-soft); border: 1px solid var(--border-strong); color: var(--text-muted); border-radius: 8px; width: 38px; cursor: pointer; font-size: 16px; }
+        .row-x:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
+        .add-row { align-self: flex-start; margin-top: 4px; background: none; border: 1px dashed var(--border-strong); color: var(--accent); border-radius: 8px; padding: 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer; }
+        .add-row:hover { border-color: var(--accent); background: var(--accent-soft); }
+
+        .editor-actions { display: flex; gap: 10px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border); }
+        .editor-actions .btn { flex: 1; justify-content: center; }
+        .editing-flag { display: none; background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(37,99,235,0.25); border-radius: 8px; padding: 9px 14px; font-size: 13px; font-weight: 600; margin-bottom: 16px; }
+        .editing-flag.on { display: block; }
+
+        /* Product list */
+        .list-toolbar { display: flex; gap: 10px; margin-bottom: 16px; }
+        .list-toolbar input { flex: 1; padding: 10px 14px; border: 1px solid var(--border-strong); border-radius: 8px; font-size: 14px; outline: none; }
+        .list-toolbar input:focus { border-color: var(--accent); }
+        .p-item { display: flex; gap: 14px; align-items: center; padding: 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; transition: border-color 0.2s; }
+        .p-item:hover { border-color: var(--accent); }
+        .p-thumb { width: 60px; height: 60px; border-radius: 8px; background-size: cover; background-position: center; background-color: var(--bg-soft2); flex-shrink: 0; }
+        .p-info { flex: 1; min-width: 0; }
+        .p-info .p-name { font-size: 14px; font-weight: 600; line-height: 1.3; }
+        .p-info .p-meta { font-size: 12px; color: var(--text-faint); margin-top: 3px; }
+        .p-info .p-cat { display: inline-block; background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-top: 5px; }
+        .p-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+        .list-empty { text-align: center; color: var(--text-muted); padding: 40px 20px; font-size: 14px; }
+
+        .hint { background: var(--accent-soft); border: 1px solid rgba(37,99,235,0.2); border-radius: 10px; padding: 14px 16px; font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+        .hint b { color: var(--text); }
+
+        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--text); color: #fff; padding: 13px 24px; border-radius: 30px; font-size: 14px; font-weight: 700; z-index: 500; opacity: 0; transition: all 0.3s; box-shadow: 0 8px 24px rgba(16,24,40,0.25); pointer-events: none; }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.err { background: var(--danger); }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">⚙️ Product Manager <small>JR Electronic Limited · local editor</small></div>
+        <div class="tools">
+            <span class="count-pill">Products: <strong id="countNum">0</strong></span>
+            <button class="btn ghost sm" onclick="reloadFromFile()" title="Discard working changes and reload products.js">↺ Reload file</button>
+            <button class="btn primary" onclick="exportProducts()">⬇ Export products.js</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- ============ EDITOR ============ -->
+        <section class="panel editor">
+            <h2>Add / Edit Product</h2>
+            <p class="sub">Fill the form, drop your images, then click Save. Repeat for each product.</p>
+
+            <div class="editing-flag" id="editingFlag"></div>
+
+            <div class="field">
+                <label>Category</label>
+                <select id="fCategory">
+                    <option value="grinder">Electric Herb Grinder</option>
+                    <option value="filter">Smoking Filter</option>
+                    <option value="iron">Soldering Iron Tool</option>
+                    <option value="paperbox">Paper Box</option>
+                    <option value="plasticbag">Plastic Bag</option>
+                    <option value="disposablebox">Disposable Pen Packaging</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Product Name</label>
+                <input type="text" id="fName" placeholder="e.g. Yocan Draco Electric Grinder (Black)">
+            </div>
+
+            <div class="field">
+                <label>Short Description</label>
+                <textarea id="fDesc" placeholder="One or two lines shown on the product card"></textarea>
+            </div>
+
+            <div class="field">
+                <label>Main Image (shown on the card)</label>
+                <div class="dropzone" id="dzMain">Drag an image here, or <strong>click to choose</strong></div>
+                <input type="file" id="fileMain" accept="image/*" hidden>
+                <div class="thumb-row" id="mainPreview"></div>
+            </div>
+
+            <div class="field">
+                <label>Detail Images (gallery on the product page)</label>
+                <div class="dropzone" id="dzDetail">Drag images here (you can drop several), or <strong>click to choose</strong></div>
+                <input type="file" id="fileDetail" accept="image/*" multiple hidden>
+                <div class="thumb-row" id="detailPreview"></div>
+            </div>
+
+            <div class="field">
+                <label>Tiered Wholesale Pricing</label>
+                <div class="rows" id="priceRows"></div>
+                <button class="add-row" type="button" onclick="addPriceRow()">+ Add price tier</button>
+            </div>
+
+            <div class="field">
+                <label>Key Attributes</label>
+                <div class="rows" id="attrRows"></div>
+                <button class="add-row" type="button" onclick="addAttrRow()">+ Add attribute</button>
+            </div>
+
+            <div class="field">
+                <label>Stripe Payment Link <span style="color:var(--text-faint);font-weight:400;">(optional)</span></label>
+                <input type="text" id="fStripe" placeholder="https://buy.stripe.com/...  (leave blank to use WhatsApp ordering)">
+            </div>
+
+            <div class="editor-actions">
+                <button class="btn ghost" onclick="clearForm()">Clear</button>
+                <button class="btn primary" id="saveBtn" onclick="saveProduct()">＋ Add Product</button>
+            </div>
+        </section>
+
+        <!-- ============ LIST ============ -->
+        <section class="panel">
+            <h2>Your Products</h2>
+            <p class="sub">Click a product to edit it. Don't forget to Export when you're done.</p>
+
+            <div class="hint">
+                <b>How it works:</b> Your edits autosave in this browser. When finished, click
+                <b>⬇ Export products.js</b>, then drop the downloaded file into your website folder
+                (replacing the old <b>products.js</b>). Images are embedded automatically — you don't
+                need to copy any image files.
+            </div>
+
+            <div class="list-toolbar">
+                <input type="text" id="search" placeholder="Search products..." oninput="renderList()">
+            </div>
+            <div id="productList"></div>
+        </section>
+    </main>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- Loads window.PRODUCTS (your current catalog) -->
+    <script src="products.js"></script>
+    <script>
+        const LS_KEY = 'jr_admin_products';
+        const CATEGORY_LABELS = {
+            grinder: "Electric Herb Grinder", filter: "Smoking Filter", iron: "Soldering Iron Tool",
+            paperbox: "Paper Box", plasticbag: "Plastic Bag", disposablebox: "Disposable Pen Packaging"
+        };
+
+        let products = [];
+        let editingId = null;
+        let currentMain = "";
+        let currentDetails = [];
+
+        /* ---------- load / save ---------- */
+        function clone(o) { return JSON.parse(JSON.stringify(o)); }
+        function fileProducts() { return Array.isArray(window.PRODUCTS) ? clone(window.PRODUCTS) : []; }
+
+        function load() {
+            try {
+                const raw = localStorage.getItem(LS_KEY);
+                if (raw) { products = JSON.parse(raw); return; }
+            } catch (e) {}
+            products = fileProducts();
+        }
+        function save() {
+            try { localStorage.setItem(LS_KEY, JSON.stringify(products)); } catch (e) {
+                toast('Could not autosave (storage full?). Export soon!', true);
+            }
+        }
+        function reloadFromFile() {
+            if (!confirm('Discard your working changes and reload the saved products.js? This cannot be undone.')) return;
+            products = fileProducts();
+            save(); clearForm(); renderList();
+            toast('Reloaded from products.js');
+        }
+
+        /* ---------- image compression ---------- */
+        function fileToDataURL(file, maxSize = 1200, quality = 0.82) {
+            return new Promise((resolve, reject) => {
+                if (!file.type.startsWith('image/')) { reject('Not an image'); return; }
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const img = new Image();
+                    img.onload = () => {
+                        let w = img.width, h = img.height;
+                        if (w > h && w > maxSize) { h = Math.round(h * maxSize / w); w = maxSize; }
+                        else if (h > maxSize) { w = Math.round(w * maxSize / h); h = maxSize; }
+                        const c = document.createElement('canvas');
+                        c.width = w; c.height = h;
+                        const ctx = c.getContext('2d');
+                        ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h);
+                        ctx.drawImage(img, 0, 0, w, h);
+                        resolve(c.toDataURL('image/jpeg', quality));
+                    };
+                    img.onerror = () => reject('Bad image');
+                    img.src = e.target.result;
+                };
+                reader.onerror = () => reject('Read error');
+                reader.readAsDataURL(file);
+            });
+        }
+
+        /* ---------- dropzones ---------- */
+        function wireDrop(zoneId, inputId, multi, handler) {
+            const zone = document.getElementById(zoneId);
+            const input = document.getElementById(inputId);
+            zone.addEventListener('click', () => input.click());
+            input.addEventListener('change', () => { handler([...input.files]); input.value = ''; });
+            ['dragover', 'dragenter'].forEach(ev => zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.add('drag'); }));
+            ['dragleave', 'drop'].forEach(ev => zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.remove('drag'); }));
+            zone.addEventListener('drop', e => { handler([...e.dataTransfer.files]); });
+        }
+        async function handleMain(files) {
+            if (!files.length) return;
+            try { currentMain = await fileToDataURL(files[0]); renderImagePreviews(); }
+            catch (e) { toast('Could not read that image', true); }
+        }
+        async function handleDetails(files) {
+            for (const f of files) {
+                try { currentDetails.push(await fileToDataURL(f)); } catch (e) {}
+            }
+            renderImagePreviews();
+        }
+        function renderImagePreviews() {
+            const mp = document.getElementById('mainPreview');
+            mp.innerHTML = currentMain
+                ? `<div class="thumb main-tag" style="background-image:url('${currentMain}')"><span class="x" onclick="currentMain='';renderImagePreviews()">×</span></div>`
+                : '';
+            const dp = document.getElementById('detailPreview');
+            dp.innerHTML = currentDetails.map((src, i) =>
+                `<div class="thumb" style="background-image:url('${src}')"><span class="x" onclick="removeDetail(${i})">×</span></div>`
+            ).join('');
+        }
+        function removeDetail(i) { currentDetails.splice(i, 1); renderImagePreviews(); }
+
+        /* ---------- repeatable rows ---------- */
+        function addPriceRow(qty = '', price = '') {
+            const wrap = document.createElement('div');
+            wrap.className = 'row2';
+            wrap.innerHTML = `<input type="text" placeholder="e.g. 100 - 999 pcs" value="${escAttr(qty)}">
+                <input type="text" placeholder="e.g. US$7.90" value="${escAttr(price)}">
+                <button class="row-x" type="button" onclick="this.parentNode.remove()">×</button>`;
+            document.getElementById('priceRows').appendChild(wrap);
+        }
+        function addAttrRow(label = '', value = '') {
+            const wrap = document.createElement('div');
+            wrap.className = 'row2';
+            wrap.innerHTML = `<input type="text" placeholder="e.g. Material" value="${escAttr(label)}">
+                <input type="text" placeholder="e.g. Aluminium" value="${escAttr(value)}">
+                <button class="row-x" type="button" onclick="this.parentNode.remove()">×</button>`;
+            document.getElementById('attrRows').appendChild(wrap);
+        }
+        function escAttr(s) { return String(s).replace(/"/g, '&quot;'); }
+
+        function readRows(containerId) {
+            const out = [];
+            document.querySelectorAll('#' + containerId + ' .row2').forEach(r => {
+                const [a, b] = r.querySelectorAll('input');
+                out.push([a.value.trim(), b.value.trim()]);
+            });
+            return out;
+        }
+
+        /* ---------- form <-> product ---------- */
+        function clearForm() {
+            editingId = null; currentMain = ''; currentDetails = [];
+            document.getElementById('fCategory').value = 'grinder';
+            document.getElementById('fName').value = '';
+            document.getElementById('fDesc').value = '';
+            document.getElementById('fStripe').value = '';
+            document.getElementById('priceRows').innerHTML = '';
+            document.getElementById('attrRows').innerHTML = '';
+            addPriceRow('20 - 99 pcs', '');
+            addPriceRow('100 - 999 pcs', '');
+            addPriceRow('1000+ pcs', '');
+            ['Material', 'Color', 'Brand Name', 'Model Number', 'Place of Origin', 'Product Name'].forEach(l => addAttrRow(l, ''));
+            renderImagePreviews();
+            document.getElementById('saveBtn').textContent = '＋ Add Product';
+            document.getElementById('editingFlag').classList.remove('on');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function editProduct(id) {
+            const p = products.find(x => x.id === id);
+            if (!p) return;
+            editingId = id;
+            currentMain = p.img || '';
+            currentDetails = [...(p.detailImages || [])];
+            document.getElementById('fCategory').value = p.category || 'grinder';
+            document.getElementById('fName').value = p.name || '';
+            document.getElementById('fDesc').value = p.desc || '';
+            document.getElementById('fStripe').value = p.stripeLink || '';
+            document.getElementById('priceRows').innerHTML = '';
+            (p.tieredPrices && p.tieredPrices.length ? p.tieredPrices : [{}]).forEach(t => addPriceRow(t.qty || '', t.price || ''));
+            document.getElementById('attrRows').innerHTML = '';
+            const attrs = p.attributes || {};
+            const keys = Object.keys(attrs);
+            (keys.length ? keys : ['Material', 'Color']).forEach(k => addAttrRow(k, attrs[k] || ''));
+            renderImagePreviews();
+            document.getElementById('saveBtn').textContent = '💾 Save Changes';
+            const flag = document.getElementById('editingFlag');
+            flag.textContent = `Editing: ${p.name} (ID ${p.id})`;
+            flag.classList.add('on');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function saveProduct() {
+            const name = document.getElementById('fName').value.trim();
+            if (!name) { toast('Please enter a product name', true); return; }
+
+            const tieredPrices = readRows('priceRows')
+                .filter(([q, p]) => q || p)
+                .map(([qty, price]) => ({ qty, price }));
+            const attributes = {};
+            readRows('attrRows').forEach(([k, v]) => { if (k && v) attributes[k] = v; });
+
+            const data = {
+                category: document.getElementById('fCategory').value,
+                name,
+                desc: document.getElementById('fDesc').value.trim(),
+                img: currentMain,
+                detailImages: [...currentDetails],
+                tieredPrices,
+                stripeLink: document.getElementById('fStripe').value.trim(),
+                attributes
+            };
+
+            if (editingId !== null) {
+                const idx = products.findIndex(p => p.id === editingId);
+                if (idx >= 0) products[idx] = { id: editingId, ...data };
+                toast('Product updated ✓');
+            } else {
+                const nextId = products.reduce((m, p) => Math.max(m, p.id || 0), 0) + 1;
+                products.push({ id: nextId, ...data });
+                toast('Product added ✓');
+            }
+            save(); clearForm(); renderList();
+        }
+
+        function duplicateProduct(id) {
+            const p = products.find(x => x.id === id);
+            if (!p) return;
+            const nextId = products.reduce((m, x) => Math.max(m, x.id || 0), 0) + 1;
+            const copy = clone(p);
+            copy.id = nextId;
+            copy.name = p.name + ' (copy)';
+            products.push(copy);
+            save(); renderList();
+            editProduct(nextId);
+            toast('Duplicated — edit the copy');
+        }
+
+        function deleteProduct(id) {
+            const p = products.find(x => x.id === id);
+            if (!p) return;
+            if (!confirm(`Delete "${p.name}"? This cannot be undone.`)) return;
+            products = products.filter(x => x.id !== id);
+            if (editingId === id) clearForm();
+            save(); renderList();
+            toast('Product deleted');
+        }
+
+        /* ---------- list rendering ---------- */
+        function renderList() {
+            const q = document.getElementById('search').value.trim().toLowerCase();
+            const list = document.getElementById('productList');
+            document.getElementById('countNum').textContent = products.length;
+            const shown = q
+                ? products.filter(p => (p.name || '').toLowerCase().includes(q) || (p.category || '').toLowerCase().includes(q))
+                : products;
+            if (!shown.length) {
+                list.innerHTML = '<div class="list-empty">' + (products.length ? 'No products match your search.' : 'No products yet — add your first one on the left.') + '</div>';
+                return;
+            }
+            list.innerHTML = shown.map(p => `
+                <div class="p-item">
+                    <div class="p-thumb" style="background-image:url('${p.img || ''}')"></div>
+                    <div class="p-info">
+                        <div class="p-name">${escHtml(p.name || 'Untitled')}</div>
+                        <div class="p-meta">ID ${p.id} · ${(p.tieredPrices || []).length} price tier(s) · ${(p.detailImages || []).length} detail image(s)</div>
+                        <span class="p-cat">${CATEGORY_LABELS[p.category] || p.category || '—'}</span>
+                    </div>
+                    <div class="p-actions">
+                        <button class="btn ghost sm" onclick="editProduct(${p.id})">✏ Edit</button>
+                        <button class="btn ghost sm" onclick="duplicateProduct(${p.id})">⧉ Copy</button>
+                        <button class="btn danger sm" onclick="deleteProduct(${p.id})">🗑 Delete</button>
+                    </div>
+                </div>`).join('');
+        }
+        function escHtml(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+        /* ---------- export ---------- */
+        function exportProducts() {
+            if (!products.length && !confirm('Your list is empty. Export anyway?')) return;
+            const header =
+`/* =====================================================================
+   JR Electronic Limited - Product Data
+   Generated by admin.html on ${new Date().toLocaleString()}
+   Drop this file into your website folder to replace the old products.js.
+   ===================================================================== */
+window.PRODUCTS = `;
+            const content = header + JSON.stringify(products, null, 2) + ';\n';
+            const blob = new Blob([content], { type: 'text/javascript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = 'products.js';
+            document.body.appendChild(a); a.click(); a.remove();
+            URL.revokeObjectURL(url);
+            toast('products.js downloaded ✓ — replace the file in your site folder');
+        }
+
+        /* ---------- toast ---------- */
+        let toastTimer = null;
+        function toast(msg, isErr) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = 'toast show' + (isErr ? ' err' : '');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.className = 'toast', 3000);
+        }
+
+        /* ---------- init ---------- */
+        wireDrop('dzMain', 'fileMain', false, handleMain);
+        wireDrop('dzDetail', 'fileDetail', true, handleDetails);
+        load();
+        clearForm();
+        renderList();
+    </script>
+</body>
+</html>
